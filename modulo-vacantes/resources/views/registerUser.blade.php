@@ -1,0 +1,13 @@
+<x-layout>
+    <h2>Esto es para registrarse</h2>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+        </button>
+        <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">Dropdown item</button></li>
+            <li><button class="dropdown-item" type="button">Dropdown item</button></li>
+            <li><button class="dropdown-item" type="button">Dropdown item</button></li>
+        </ul>
+    </div>
+</x-layout>
