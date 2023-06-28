@@ -24,3 +24,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('registerUser');
 });
+
+Route::get('/admin_usuarios', function () {
+    return view('administrar_usuarios');
+});
