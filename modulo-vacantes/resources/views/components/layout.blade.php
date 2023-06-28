@@ -47,7 +47,7 @@
 
          </div>
      </nav>
-     <main class="container wrapper bg-dark-subtle p-5">
+     <main class="container wrapper bg-dark-subtle pt-4 pb-5 pl-0 pr-0">
          {{ $slot }}
      </main>
 
