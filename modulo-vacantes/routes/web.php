@@ -28,3 +28,7 @@ Route::get('/register', function () {
 Route::get('/admin_usuarios', function () {
     return view('administrar_usuarios');
 });
+
+Route::get('/sign_in', function () {
+    return view('sign_in');
+});
