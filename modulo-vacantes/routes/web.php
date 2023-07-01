@@ -36,3 +36,7 @@ Route::get('/sign_in', function () {
 Route::get('/editar_usuario', function () {
     return view('editar_usuario');
 });
+
+Route::get('/nuevo_llamado', function () {
+    return view('nuevo_llamado');
+});
