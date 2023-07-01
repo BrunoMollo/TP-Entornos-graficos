@@ -40,3 +40,7 @@ Route::get('/editar_usuario', function () {
 Route::get('/nuevo_llamado', function () {
     return view('nuevo_llamado');
 });
+
+Route::get('/administrar_llamados', function () {
+    return view('administrar_llamados');
+});
