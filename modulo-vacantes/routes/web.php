@@ -32,3 +32,7 @@ Route::get('/admin_usuarios', function () {
 Route::get('/sign_in', function () {
     return view('sign_in');
 });
+
+Route::get('/editar_usuario', function () {
+    return view('editar_usuario');
+});
