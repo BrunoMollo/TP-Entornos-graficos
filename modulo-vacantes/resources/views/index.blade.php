@@ -1,9 +1,30 @@
 <x-layout>
-    <h2>Esto es el index</h2>
-    <p>La verdad loco que no se muy bien que poner aca adentro</p>
-    <p>
-        Pero podemos reutulizar todolo que esta alrededor,
-        y le meti un hack re copado para caombiar
-        las opciones que aparecen ene el navbar
-    </p>
+    <div class="container">
+        <h2 class="my-4">Ultimas vacantes abiertas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Llamada</th>
+                    <th>Fecha de Cierre</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Investigacion Operativa - Auxiliar de practica</td>
+                    <td>2023-07-15</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Postularme</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Teoria de control - Profesor de teoria</td>
+                    <td>2023-07-20</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Postularme</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </x-layout>
