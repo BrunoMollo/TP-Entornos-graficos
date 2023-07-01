@@ -32,3 +32,23 @@ Route::get('/admin_usuarios', function () {
 Route::get('/sign_in', function () {
     return view('sign_in');
 });
+
+Route::get('/vacantes_abiertas', function () {
+    return view('vacantes_abiertas');
+});
+
+Route::get('/vacantes_cerradas', function () {
+    return view('vacantes_cerradas');
+});
+
+Route::get('/vacantes_mi_catedra', function () {
+    return view('vacantes_mi_catedra');
+});
+
+Route::get('/postulaciones', function () {
+    return view('postulaciones');
+});
+
+Route::get('/orden_de_merito', function () {
+    return view('orden_de_merito');
+});
