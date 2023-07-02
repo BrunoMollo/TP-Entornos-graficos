@@ -21,12 +21,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
-// Route::get('/register', function () {
-//     return view('registerUser');
-// });
-
 Route::get('/admin_usuarios', function () {
     return view('administrar_usuarios');
+});
+
+Route::get('/editar_usuario', function () {
+    return view('editar_usuario');
 });
 
 Route::get('/sign_in', function () {
@@ -51,9 +51,6 @@ Route::get('/postulaciones', function () {
 
 Route::get('/orden_de_merito', function () {
     return view('orden_de_merito');
-});
-Route::get('/editar_usuario', function () {
-    return view('editar_usuario');
 });
 
 Route::get('/nuevo_llamado', function () {

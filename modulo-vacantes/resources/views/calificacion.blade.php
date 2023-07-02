@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <div class="ms-2 col-6 col-sm-6 ">
-                <h6 class="fw-bolder">Postulante: Cristian Rodriguez</h6>
+                <h6 class="fw-bolder">Postulante: Cristian Bisbal</h6>
                 <h6 class="fw-bolder">Link CV: https://bisbal.com.ar</h6>
             </div>
         </div>
@@ -21,7 +21,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach([['Titulo universitario',9],['Antecedentes docentes',12],['Cursos de especializacion',15], ['Concurrencia a congresos',1], ['Antecedentes laborales',10]] as $merito)
+                    @foreach([['Titulo universitario',9],
+                    ['Titulo vinculado a la asignatura',12],
+                    ['Antecedentes docentes',12],
+                    ['Antecedentes laborales afines a la asignatura',15],
+                    ['Obras y publicaciones',1],
+                    ['Concurrencia a congresos',10] ] as $merito)
                     <tr>
                         <td class="text-start" colspan="4">{{$merito[0]}}</td>
                         <td><input value="{{$merito[1]}}"></td>
