@@ -63,3 +63,11 @@ Route::get('/nuevo_llamado', function () {
 Route::get('/administrar_llamados', function () {
     return view('administrar_llamados');
 });
+
+Route::get('/calificacion', function () {
+    return view('calificacion');
+});
+
+Route::get('/postulacion_vacante', function () {
+    return view('postulacion_vacante');
+});

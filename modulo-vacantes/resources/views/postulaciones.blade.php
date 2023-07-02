@@ -6,8 +6,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th  class="text-center" colspan="2">Postulante</th>
-                    <th  class="text-center" >Email</th>
+                    <th class="text-center" colspan="2">Postulante</th>
+                    <th class="text-center">Email</th>
                     <th class="text-center">Opción</th>
                 </tr>
             </thead>
@@ -21,11 +21,10 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="row d-flex " >
-          <button class="col-2 btn btn-primary ms-auto">Generar Orden de Merito</button>
+        <div class="row d-flex ">
+            <button class="col-2 btn btn-primary ms-auto">Generar Orden de Merito</button>
         </div>
 
     </div>
 
-    </html>
 </x-layout>
