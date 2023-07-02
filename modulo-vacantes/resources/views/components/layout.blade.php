@@ -56,7 +56,7 @@
              <div class="row">
                  <div class="col-md-6">
                      <h4>Sobre nosotros</h4>
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam blandit justo sed ullamcorper vestibulum.</p>
+                     <p>UTN Frro: Formación tecnológica e innovadora desde hace más de 60 años.</p>
                  </div>
                  <div class="col-md-3">
                      <h4>Contactanos</h4>
