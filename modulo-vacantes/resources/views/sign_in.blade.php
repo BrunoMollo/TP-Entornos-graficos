@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <h2>Registrarse</h2>
     <form class="container">
         <div class="form-group col-11 col-md-6">
@@ -43,4 +44,4 @@
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
     </form>
-</x-layout>
+@endsection

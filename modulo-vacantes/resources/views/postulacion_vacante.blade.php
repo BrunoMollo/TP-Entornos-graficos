@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container">
         <div class="col-sm-6 col-12 mx-auto text-center">
             <h2>Postulacion a vacante</h2>
@@ -19,4 +20,4 @@
             </div>
         </div>
     </div>
-</x-layout>
+@endsection

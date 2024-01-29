@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container d-flex flex-column align-items-center">
         <h2 class="my-4">Editar Usuario</h2>
         <form>
@@ -21,4 +22,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+@endsection

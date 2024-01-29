@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <h2 class="m-2 col-12 col-sm-6 text-center">Listado de vacantes abiertas</h2>
@@ -23,4 +24,4 @@
     </div>
 
     </html>
-</x-layout>
+@endsection

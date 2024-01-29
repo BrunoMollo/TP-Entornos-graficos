@@ -1,5 +1,6 @@
-<x-layout>
+@extends('layouts.app')
 
+@section('content')
     <div class="row justify-content-center pt-4 pb-5">
         <div class="col-md-6">
             <div class="card">
@@ -23,4 +24,4 @@
         </div>
     </div>
 
-</x-layout>
+@endsection

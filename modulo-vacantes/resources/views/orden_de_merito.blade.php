@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <h2 class="m-2 col-12 col-sm-6 text-center">Resultados de Orden de Merito a vacante de <b>Teoria de contol</b></h2>
@@ -35,4 +36,4 @@
             <button class=" col-4 btn btn-primary">Volver</button>
         </div>
     </div>
-</x-layout>
+@endsection

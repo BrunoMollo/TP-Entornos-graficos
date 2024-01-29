@@ -1,4 +1,5 @@
-<x-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container">
         <h2 class="my-4">Administración de Llamadas</h2>
         <table class="table">
@@ -29,4 +30,4 @@
             </tbody>
         </table>
     </div>
-</x-layout>
+@endsection
