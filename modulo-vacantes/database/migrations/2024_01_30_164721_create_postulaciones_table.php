@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('correo_electronico');
-            $table->binary('curriculum_vitae')->nullable();
+            //$table->binary('curriculum_vitae')->nullable();  Link al cv en google drive?
             $table->foreignId('llamado_id')->constrained('llamados');
             $table->foreignId('usuario_id')->constrained('users');
             $table->timestamps();

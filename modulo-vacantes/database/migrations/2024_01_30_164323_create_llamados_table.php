@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('descripcion');
             $table->dateTime('fecha_apertura');
             $table->dateTime('fecha_cierre');
-            $table->foreignId('responsable_administrativo_id')->constrained('users');
+            $table->foreignId('catedra_id')->constrained('catedras');
             $table->timestamps();
         });
     }

@@ -50,7 +50,7 @@
                             <a class="nav-link" href="#">Administracion de usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Administracion de llamados</a>
+                            <a class="nav-link" href="{{ url('/admin/administrar_llamados') }}">Administracion de llamados</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Vacantes de mi catedra</a>
