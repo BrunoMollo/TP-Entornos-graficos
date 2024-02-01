@@ -12,8 +12,19 @@ docker compose up -d
 docker compose exec php bash
 composer setup
 ```
-Si al correr el utlimo comando salta algun error, proba reiniciando los conenedores con el comando
-`docker compose down && docker compose up -d`
+#### Troubleshooting
+- Si al correr el utlimo comando salta el error diciendo que no encuentra `setup`, proba reiniciando los conenedores con el comando
+```sh
+docker compose down && docker compose up -d
+docker compose exec php bash
+composer setup
+```
+
+- Si e el navegodor salta un error relacionado al directorio `storage`, puede deverse a un tema de permisos, cambielo con el siguiente comando
+
+```sh
+chmod o+w ./storage/ -R
+```
 
 ### Levantar el servidor
 
