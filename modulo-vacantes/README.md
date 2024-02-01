@@ -12,6 +12,8 @@ docker compose up -d
 docker compose exec php bash
 composer setup
 ```
+Si al correr el utlimo comando salta algun error, proba reiniciando los conenedores con el comando
+`docker compose down && docker compose up -d`
 
 ### Levantar el servidor
 
