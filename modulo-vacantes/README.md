@@ -5,14 +5,18 @@
 Basado en [esta plantilla](https://github.com/refactorian/laravel-docker/tree/main)
 
 ### Solo una vez, luego de clonar el proyecto
+
 ```sh
+cp .env.example .env
 docker compose up -d
 docker compose exec php bash
 composer setup
 ```
+
 ### Levantar el servidor
+
 ```sh
 docker compose up -d
 ```
-El servidor estara disponible en [http://localhost:8000](http://localhost:8000)
 
+El servidor estara disponible en [http://localhost:8000](http://localhost:8000)
