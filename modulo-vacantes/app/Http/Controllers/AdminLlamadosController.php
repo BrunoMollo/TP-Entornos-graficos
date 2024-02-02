@@ -12,14 +12,14 @@ class AdminLlamadosController extends Controller
         public function admin_llamados()
     {
         $llamados = Llamado::with('catedra')->get();
-        return view('admin.administrar_llamados', ['llamados' => $llamados]);
+        return view('administrar_llamados', ['llamados' => $llamados]);
     }
 
     public function create()
     {
         $catedras = Catedra::all();
 
-        return view('admin.nuevo_llamado', ['catedras' => $catedras]);
+        return view('nuevo_llamado', ['catedras' => $catedras]);
     }
 
     public function store(Request $request)

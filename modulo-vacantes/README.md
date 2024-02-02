@@ -2,41 +2,34 @@
 
 ## Setup 🚀
 
-### Antes de arracar
-Para levantar el servidor de desarrollo es necesario tener instalado: 
-- **[Docker](https://docs.docker.com/)**.
-- **npm**, se recomienda intalar **Node.js** usando **[nvm](https://github.com/nvm-sh/nvm)**
-- **[Composer](https://getcomposer.org/)** 
-- Si usas Windows, vas a necesitar **[WSL2](https://learn.microsoft.com/es-es/windows/wsl/install)**  para que Docker funcione. 
+Basado en [esta plantilla](https://github.com/refactorian/laravel-docker/tree/main)
 
-### Dependencias del proyecto
-Luego de clonar el repositorio, estando parado en la carpeta `modulo-vacantes`, correr los siguientes comando para instalar las dependecias:
-```bash
-composer install
+### Solo una vez, luego de clonar el proyecto
+
+```sh
+cp .env.example .env
+docker compose up -d
+docker compose exec php bash
+composer setup
 ```
-```bash
-nmp i
-```
-
-### Levantar el servidor de desarrollo
-Una vez instaladas las dependencias, se puede inicia el servidor 
-con el ejecutable `sail` que se encuantra dentro de la carpeta `vendor\bin\`.
-El mismo se llama utilizando el siguiente comando:
-```bash
-./vendor/bin/sail up
-```
-Ese comando levantara una serie de contenedores en utilizando `docker compose`, incluyedo `mysql` entre otros servicios.
-
-
-A su vez, en otra consola es necesario levantar el otro servidor de desarollo con Vite, ya que usamos un preprocesador de CSS asi
-que hay que tener un proceso de compliacion.Este otro servidor se levanta con:
-```bash
-npm run dev
+#### Troubleshooting
+- Si al correr el utlimo comando salta el error diciendo que no encuentra `setup`, proba reiniciando los conenedores con el comando
+```sh
+docker compose down && docker compose up -d
+docker compose exec php bash
+composer setup
 ```
 
-Luego de todas estas vueltas, deberias poder ver la pagina de incion en [http://0.0.0.0/](http://0.0.0.0/) o en [http://localhost:80](http://localhost:80).
+- Si e el navegodor salta un error relacionado al directorio `storage`, puede deverse a un tema de permisos, cambielo con el siguiente comando
 
+```sh
+chmod o+w ./storage/ -R
+```
 
-Espero que todo salga bien...
-   
-Que dios te bendiga
+### Levantar el servidor
+
+```sh
+docker compose up -d
+```
+
+El servidor estara disponible en [http://localhost:8000](http://localhost:8000)
