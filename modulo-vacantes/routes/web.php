@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLlamadosController;
+use App\Http\Controllers\JefeCatedraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
 Route::get('/admin/nuevo_llamado', [AdminLlamadosController::class, 'create'])->name('nuevo_llamado');
 Route::post('/admin/llamados/guardar', [AdminLlamadosController::class, 'store'])->name('guardar_llamado');
+
+Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
+
 
 
 Route::get('/', function () {

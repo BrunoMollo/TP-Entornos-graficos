@@ -17,7 +17,6 @@ class Llamado extends Model
         'descripcion',
         'fecha_apertura',
         'fecha_cierre',
-        'responsable_administrativo_id',
     ];
 
     // Relación con la catedra
@@ -26,4 +25,7 @@ class Llamado extends Model
         return $this->belongsTo(Catedra::class, 'catedra_id');
     }
     
+    public function llamados(){
+        return $this->hasMany(Postulacion::class);
+    }
 }
