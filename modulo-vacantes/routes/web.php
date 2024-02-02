@@ -19,14 +19,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return User::all();
+Route::get('/', function () {    
     return view('index');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
 
 Route::get('/admin_usuarios', function () {
     return view('administrar_usuarios');
@@ -75,6 +74,14 @@ Route::get('/calificacion', function () {
 Route::get('/postulacion_vacante', function () {
     return view('postulacion_vacante');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
