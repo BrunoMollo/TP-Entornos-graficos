@@ -73,14 +73,6 @@ Route::get('/orden_de_merito', function () {
     return view('orden_de_merito');
 });
 
-Route::get('/nuevo_llamado', function () {
-    return view('nuevo_llamado');
-});
-
-Route::get('/administrar_llamados', function () {
-    return view('administrar_llamados');
-});
-
 Route::get('/calificacion', function () {
     return view('calificacion');
 });

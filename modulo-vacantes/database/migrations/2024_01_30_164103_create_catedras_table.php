@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('catedras', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->foreignId('jefe_catedra_id')->constrained('users');
         });
     }
 
