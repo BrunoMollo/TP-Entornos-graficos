@@ -47,16 +47,38 @@ class AdminLlamadosController extends Controller
 
     public function edit($id)
     {
-        // Lógica para mostrar el formulario de edición de llamados
+        $llamado = Llamado::findOrFail($id);
+        $catedras = Catedra::all();
+
+        return view('editar_llamado', compact('llamado', 'catedras'));
     }
 
     public function update(Request $request, $id)
     {
-        // Lógica para actualizar un llamado existente en la base de datos
+        $request->validate([
+            'catedra_id' => 'required|exists:catedras,id',
+            'puesto' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'fecha_cierre' => 'required|date',
+        ]);
+
+        $llamado = Llamado::findOrFail($id);
+
+        $llamado->update([
+            'catedra_id' => $request->input('catedra_id'),
+            'puesto' => $request->input('puesto'),
+            'descripcion' => $request->input('descripcion'),
+            'fecha_cierre' => $request->input('fecha_cierre'),
+        ]);
+
+        return redirect()->route('admin_llamados')->with('success', 'Llamado actualizado exitosamente');
     }
 
     public function destroy($id)
     {
-        // Lógica para eliminar un llamado de la base de datos
+        $llamado = Llamado::findOrFail($id);
+        $llamado->delete();
+
+        return redirect()->route('admin_llamados')->with('success', 'Llamado eliminado exitosamente');
     }
 }
