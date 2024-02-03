@@ -23,7 +23,7 @@
         <ul class="navbar-nav me-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Administracion de usuarios</a>
+                <a class="nav-link" href="{{ route('users.index') }}">Administracion de usuarios</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin_llamados') }}">Administracion de llamados</a>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLlamadosController;
 use App\Http\Controllers\JefeCatedraController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,19 @@ Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 
 Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
 
 
+// Rutas para el CRUD de usuarios
+Route::resource('users', UserController::class);
+
+//Esto hace el resource 
+// GET      /users                index       users.index
+// GET      /users/create         create      users.create
+// POST     /users                store       users.store
+// GET      /users/{user}         show        users.show
+// GET      /users/{user}/edit    edit        users.edit
+// PUT      /users/{user}         update      users.update
+// DELETE   /users/{user}         destroy     users.destroy
+
+
 
 Route::get('/', function () {    
     return view('index');
@@ -41,9 +55,9 @@ Route::get('/', function () {
 //     return view('login');
 // });
 
-Route::get('/admin_usuarios', function () {
-    return view('administrar_usuarios');
-});
+// Route::get('/admin_usuarios', function () {
+//     return view('administrar_usuarios');
+// });
 
 Route::get('/editar_usuario', function () {
     return view('editar_usuario');
@@ -81,30 +95,3 @@ Route::get('/postulacion_vacante', function () {
     return view('postulacion_vacante');
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
