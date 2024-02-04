@@ -4,24 +4,30 @@
 <div class="container">
     <div class="row justify-content-between mb-3">
         <h2 class="m-2 col-11 col-sm-6">Listado de usuarios</h2>
-        <a href="{{ route('users.create') }}" class="m-2 col-11 col-sm-3 btn btn-primary">Crear Usuario</a>
+        <a href="{{ route('users.create') }}" class="m-2 col-11 col-sm-3 btn btn-success">Crear Usuario</a>
     </div>
-    <table id="usersTable" class="table  table-striped table-bordered">
+    <table id="usersTable" class="table responsive table-striped table-bordered">
         <thead>
             <tr>
-                <th scope="col" colspan="2">Nombre</th>
-                <th scope="col" colspan="2">Email</th>
-                <th scope="col" colspan="2" class="text-center">Acción</th>
+                <th >Nombre</th>
+                <th >Email</th>
+                <th >Rol</th>
+                <th class="text-center">Acción</th>
             </tr>
         </thead>
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td colspan="2">{{$user->name}} {{$user->last_name}}</td>
-                <td colspan="2">{{$user->email}}</td>
+                <td >{{$user->name}} {{$user->last_name}}</td>
+                <td >{{$user->email}}</td>
+                <td >
+                    @foreach ($user->getRoleNames() as $role)
+                        {{ $role }}
+                    @endforeach    
+                </td>
                 <td>
                     <div class='d-flex justify-content-around'>
-                        <a href="{{route('users.edit', $user->id)}}" class="btn btn-sm btn-primary ">Editar</a>
+                        <a href="{{route('users.edit', $user)}}" class="btn btn-sm btn-primary ">Editar</a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
@@ -36,18 +42,30 @@
 
 </div>
 
-@section('script')
-    <script type="text/javascript">
-        alert('a')
-        console.log('aa');
-        // $(document).ready(function() {
-        //     $('#usersTable').DataTable({
-        //         pagingType: 'full_numbers',
-        //         lengthMenu: [10, 25, 50],
-        //         searching: true,
-        //     });
-        // });
-    </script>
-@endsection
+
+<script >
+    console.log('aa')
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            pagingType: 'full_numbers',
+            lengthMenu: [10, 25, 50],
+            searching: true,
+            "language": {
+                "search": "Buscar:",
+                "lengthMenu": "Mostrar _MENU_ usuarios por página",
+                "zeroRecords": "No se encontraron usuarios",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+                "infoEmpty": "Mostrando 0 a 0 de 0 usuarios",
+                "infoFiltered": "(filtrado de _MAX_ usuarios totales)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+    });
+</script>
 
 @endsection

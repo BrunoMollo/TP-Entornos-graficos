@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLlamadosController;
 use App\Http\Controllers\JefeCatedraController;
 use App\Http\Controllers\UserController;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,9 @@ Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postul
 
 
 // Rutas para el CRUD de usuarios
-Route::resource('users', UserController::class);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+});
 
 //Esto hace el resource 
 // GET      /users                index       users.index
