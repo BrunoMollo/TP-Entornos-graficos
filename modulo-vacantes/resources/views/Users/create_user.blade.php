@@ -25,7 +25,7 @@
             <div class="form-group mb-3">
                 <label for="email">Correo Electrónico</label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror" style="width: 300px;" id="email" name="email" required placeholder="Ingrese el email">
-                @error('eamil')
+                @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -58,4 +58,19 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const response = (@json(session('response')));
+        console.log(response);
+        if(response){
+            const successMessage = response.original.message.join('<br>');
+            if(response.original.success){
+                Swal.fire('',successMessage,'success')
+            }else{
+                Swal.fire('Error',successMessage,'error')
+
+            }
+        }
+    </script>
+
 @endsection

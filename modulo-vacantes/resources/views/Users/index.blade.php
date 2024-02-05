@@ -28,9 +28,9 @@
                 <td>
                     <div class='d-flex justify-content-around'>
                         <a href="{{route('users.edit', $user)}}" class="btn btn-sm btn-primary ">Editar</a>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
-                            @csrf
+                        <form action="{{ route('users.destroy',$user) }}" method="POST" class="d-inline">
                             @method('DELETE')
+                            @csrf
                             <button type="submit" class=" btn btn-danger  btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">Eliminar</button>
                         </form>    
                     </div>
@@ -44,7 +44,6 @@
 
 
 <script >
-    console.log('aa')
     $(document).ready(function() {
         $('#usersTable').DataTable({
             pagingType: 'full_numbers',
@@ -66,6 +65,21 @@
             }
         });
     });
+
+
+        
+    const response = (@json(session('response')));
+    console.log(response);
+    if(response){
+        const successMessage = response.original.message.join('<br>');
+        if(response.original.success){
+            Swal.fire('',successMessage,'success')
+        }else{
+            Swal.fire('Error',successMessage,'error')
+
+        }
+    }
+
 </script>
 
 @endsection
