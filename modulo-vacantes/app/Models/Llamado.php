@@ -25,7 +25,7 @@ class Llamado extends Model
         return $this->belongsTo(Catedra::class, 'catedra_id');
     }
     
-    public function llamados(){
+    public function postulaciones(){
         return $this->hasMany(Postulacion::class);
     }
 }
