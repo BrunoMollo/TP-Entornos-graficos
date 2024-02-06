@@ -31,6 +31,9 @@ Route::get('/admin/llamados/editar/{id}', [AdminLlamadosController::class, 'edit
 Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, 'update'])->name('actualizar_llamado');
 Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 'destroy'])->name('eliminar_llamado');
 
+// Jefe de catedra
+Route::get('/vacantes_mi_catedra', [JefeCatedraController::class, 'vacantes_mi_catedra'])->name('vacantes_mi_catedra');
+
 Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
 
 
@@ -76,10 +79,6 @@ Route::get('/vacantes_abiertas', function () {
 
 Route::get('/vacantes_cerradas', function () {
     return view('vacantes_cerradas');
-});
-
-Route::get('/vacantes_mi_catedra', function () {
-    return view('vacantes_mi_catedra');
 });
 
 Route::get('/postulaciones', function () {

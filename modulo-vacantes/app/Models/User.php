@@ -44,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function catedras()
+    {
+        return $this->hasMany(Catedra::class, 'jefe_catedra_id');
+    }
 }

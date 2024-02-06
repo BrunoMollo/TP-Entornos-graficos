@@ -32,9 +32,15 @@
                     </li>
                 @endrole
             @endif
-            <li class="nav-item">
-                <a class="nav-link" href="#">Vacantes de mi catedra</a>
-            </li>
+
+            @auth
+                @role('jefe_catedra')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
+                    </li>
+                @endrole
+            @endauth
+
             <li class="nav-item">
                 <a class="nav-link" href="#">Vacantes abiertas</a>
             </li>
