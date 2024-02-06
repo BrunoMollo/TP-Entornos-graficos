@@ -33,6 +33,7 @@ Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 
 
 // Jefe de catedra
 Route::get('/vacantes_mi_catedra', [JefeCatedraController::class, 'vacantes_mi_catedra'])->name('vacantes_mi_catedra');
+Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
 
 Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
 

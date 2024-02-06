@@ -22,7 +22,7 @@ class Postulacion extends Model
         return $this->belongsTo(Llamado::class, 'llamado_id');
     }
 
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(User::class, 'usuario_id');
     }
 

@@ -15,4 +15,10 @@ class JefeCatedraController extends Controller
         $llamados = Llamado::whereIn('catedra_id', $catedraIds)->get();
         return view('vacantes_mi_catedra', ['llamados' => $llamados]);
     }
+
+    public function postulaciones(Llamado $llamado)
+    {
+        $postulaciones = $llamado->postulaciones->load('user');
+        return view('postulaciones', compact('postulaciones', 'llamado'));
+    }
 }
