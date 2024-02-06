@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->foreignId('jefe_catedra_id')->constrained('users');
+            $table->timestamps();
         });
     }
 
