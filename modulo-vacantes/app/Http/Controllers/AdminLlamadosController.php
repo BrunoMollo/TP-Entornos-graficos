@@ -31,6 +31,10 @@ class AdminLlamadosController extends Controller
             'descripcion' => 'required|string',
             'fecha_cierre' => 'required|date',
         ]);
+
+        if($request->fecha_cierre < Carbon::now()){
+            // MANEJAR ERROR
+        }
     
         // Crear un nuevo llamado en la base de datos
         Llamado::create([
@@ -40,6 +44,9 @@ class AdminLlamadosController extends Controller
             'fecha_apertura' => Carbon::now(),
             'fecha_cierre' => $request->input('fecha_cierre'),
         ]);
+
+
+
     
         // Redireccionar
         return redirect()->route('admin_llamados')->with('success', 'Llamado creado exitosamente');
@@ -63,6 +70,10 @@ class AdminLlamadosController extends Controller
         ]);
 
         $llamado = Llamado::findOrFail($id);
+
+        if($request->fecha_cierre < Carbon::now()){
+            // MANEJAR ERROR
+        }
 
         $llamado->update([
             'catedra_id' => $request->input('catedra_id'),

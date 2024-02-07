@@ -24,11 +24,14 @@
                     @foreach($llamados as $llamado)
                         <tr>
                             <td>{{$llamado->catedra ? $llamado->catedra->nombre : 'No tiene catedra'   }} - {{$llamado->puesto}} - {{$llamado->descripcion}}</td>
-                            <td>{{ \Carbon\Carbon::parse($llamado->fecha_cierre)->format('Y-m-d') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($llamado->fecha_cierre)->format('Y-m-d') }}
+        <a href="{{route('test',['dest'=>'ginogallina2002@gmail.com','llamado'=> $llamado])}}">Mail</a>
+                        </td>
+
                             @auth
                                 @role('postulante')
                             <td>
-                                <button type="button" class="btn btn-primary">Postularme</button>
+                                <a href=" {{route('postulaciones.crear',['llamadoId' => $llamado->id])}} " type="button" class="btn btn-primary">Postularme</a>
                             </td>
                                 @endrole
                             @endauth

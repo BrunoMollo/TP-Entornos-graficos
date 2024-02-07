@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +28,25 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Throwable $exception)
+    {
+        $exceptionClass= get_class($exception);
+        // echo $exceptionClass;
+        if ($exceptionClass === 'Spatie\Permission\Exceptions\UnauthorizedException') {
+            return response()->view('Error.403', [], 403);
+        }else if($exceptionClass ==='Symfony\Component\HttpKernel\Exception\NotFoundHttpException' ){
+            return response()->view('Error.404', [], 404);
+
+        }
+        return parent::render($request, $exception);
     }
 }

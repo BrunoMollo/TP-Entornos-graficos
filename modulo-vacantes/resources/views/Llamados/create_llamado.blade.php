@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3 col-md-2">
                 <label for="fecha_cierre" class="form-label">Fecha de Cierre</label>
-                <input type="date" class="form-control" name="fecha_cierre" required>
+                <input type="date" class="form-control" min="{{ date('Y-m-d') }}" name="fecha_cierre" required>
             </div>
             <!-- Botón para enviar el formulario -->
             <button type="submit" class="btn btn-primary">Crear Llamado</button>

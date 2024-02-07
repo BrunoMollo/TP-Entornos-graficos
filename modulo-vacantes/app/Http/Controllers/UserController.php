@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 // use Illuminate\Foundation\Auth\User;
+use App\Mail\AvisoFinInscripcionLlamadoJefeCatedra;
+use App\Models\Llamado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Mail;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -75,7 +78,7 @@ class UserController extends Controller
             $role = Role::findOrFail($request->input('rol'));
             $user->assignRole($role->name);
             
-
+            
              // Creo la response 
             $response = response()->json(['data' => $user, 'message' => ['Usuario creado exitosamente'], 'status'=> 201, 'success'=>true]);
 
@@ -142,7 +145,12 @@ class UserController extends Controller
             $response = response()->json(['data' => null, 'message' => ['Error al eliminar el usuario: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->route('users.index')->with('response',$response);
         }
+    }
 
-        
+    public function test(String $dest, Llamado $llamado){
+        $llam= Llamado::find($llamado)->first();
+        // echo $dest;
+        // echo $llam;
+         Mail::to($dest)->send(new AvisoFinInscripcionLlamadoJefeCatedra($llam));
     }
 }

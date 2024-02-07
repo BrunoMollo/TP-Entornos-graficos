@@ -24,7 +24,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $llamados = Llamado::all();
+        $llamados = Llamado::where('estado','abierto')->get();
         return view('Index.index')->with(compact('llamados'));
     }
 }

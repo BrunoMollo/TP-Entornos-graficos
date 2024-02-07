@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\PostulacionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLlamadosController;
 use App\Http\Controllers\JefeCatedraController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndexController;
 use Spatie\Permission\Models\Role;
 
 /*
@@ -24,10 +26,13 @@ use Spatie\Permission\Models\Role;
 Auth::routes();
 
 
+Route::get("/test/{dest}/{llamado}", [UserController::class,'test'])->name('test');
+
 //Vista inicial
-Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-Route::get('/index', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::redirect('/home', '/');
+Route::redirect('/index', '/');
+
 
 // Administracion de llamados
 Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
@@ -58,8 +63,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // PUT      /users/{user}         update      users.update
 // DELETE   /users/{user}         destroy     users.destroy
 
+// Postulación user
+ Route::middleware(['auth','role:postulante'])->group(function () {
+     Route::resource('postulaciones', PostulacionController::class);
+     Route::get('/postulaciones/create/{llamadoId}',[PostulacionController::class,'create'])->name('postulaciones.crear');
 
-
+ });
 
 
 
