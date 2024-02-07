@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-around">
         <div class="col-md-6">
             <h4>Sobre nosotros</h4>
             <p>UTN Frro: Formación tecnológica e innovadora desde hace más de 60 años.</p>
@@ -13,8 +13,7 @@
             </ul>
         </div>
     </div>
-    <hr>
     <div class="text-center">
-        <p>&copy; 2023 Universidad Tecnologica Nacional. Todos los derechos reservados.</p>
+        <p class="mb-1">&copy; 2023 Universidad Tecnologica Nacional. Todos los derechos reservados.</p>
     </div>
 </div>

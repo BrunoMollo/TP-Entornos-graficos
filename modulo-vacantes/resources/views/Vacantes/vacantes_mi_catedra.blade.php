@@ -8,7 +8,7 @@
             <div class="card my-2">
                  <div class="card-header">
                     <h5 class="mb-0">
-                        <a href="{{ route('postulaciones', ['llamado' => $llamado]) }}">
+                        <a class="text-decoration-none" href="{{ route('postulaciones', ['llamado' => $llamado]) }}">
                             {{ $llamado->catedra->nombre }} - {{ $llamado->puesto }}
                         </a>
                     </h5>

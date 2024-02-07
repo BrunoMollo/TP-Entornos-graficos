@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container d-flex flex-column align-items-center">
-        <h2 class="my-4">Crear Usuario</h2>
+        <h2 class="my-4">Editar Usuario</h2>
         <form class="border shadow p-4" method="POST" action="{{ route('users.store') }}">
             @csrf
             <div class="form-group mb-3">
@@ -48,7 +48,7 @@
                 <label for="rol">Rol</label>
                 <select class="form-select" id="rol" name="rol" >
                     @foreach($roles as $rol)
-                        <option id="{{$rol->id}}" value="{{$rol->id}}">{{$rol->name}}</option>
+                        <option @if($user->getRoleNames()[0] == $rol->name) selected @endif id="{{$rol->id}}" value="{{$rol->id}}">{{$rol->name}}</option>
                     @endforeach
                 </select>
             </div>

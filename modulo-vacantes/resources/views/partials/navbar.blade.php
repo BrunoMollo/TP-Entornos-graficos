@@ -22,7 +22,7 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
 
-            @if (auth()->check())
+            @auth 
                 @role('admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">Administracion de usuarios</a>
@@ -30,10 +30,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin_llamados') }}">Administracion de llamados</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vacantes cerradas</a>
+                    </li>
                 @endrole
-            @endif
 
-            @auth
                 @role('jefe_catedra')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
@@ -42,10 +43,7 @@
             @endauth
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Vacantes abiertas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Vacantes cerradas</a>
+                <a class="nav-link" href="/">Vacantes abiertas</a>
             </li>
 
         </ul>

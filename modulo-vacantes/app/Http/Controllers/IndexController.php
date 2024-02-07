@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Llamado;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class IndexController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-       //return view('home');
-       return view('index');
+        $llamados = Llamado::all();
+        return view('Index.index')->with(compact('llamados'));
     }
 }

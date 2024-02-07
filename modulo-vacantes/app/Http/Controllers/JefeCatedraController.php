@@ -13,12 +13,12 @@ class JefeCatedraController extends Controller
         $catedrasUsuario = Auth::user()->catedras;
         $catedraIds = $catedrasUsuario->pluck('id');
         $llamados = Llamado::whereIn('catedra_id', $catedraIds)->get();
-        return view('vacantes_mi_catedra', ['llamados' => $llamados]);
+        return view('Vacantes.vacantes_mi_catedra', ['llamados' => $llamados]);
     }
 
     public function postulaciones(Llamado $llamado)
     {
         $postulaciones = $llamado->postulaciones->load('user');
-        return view('postulaciones', compact('postulaciones', 'llamado'));
+        return view('Postulaciones.index', compact('postulaciones', 'llamado'));
     }
 }

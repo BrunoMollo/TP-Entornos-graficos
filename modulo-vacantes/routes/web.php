@@ -19,9 +19,15 @@ use Spatie\Permission\Models\Role;
 |
 */
 
+
+// Manejo por defecto las rutas de Login y Register
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Vista inicial
+Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/index', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 // Administracion de llamados
 Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
@@ -54,47 +60,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-Route::get('/', function () {    
-    return view('index');
-});
 
-// Route::get('/login', function () {
-//     return view('login');
+
+
+
+
+// Route::get('/orden_de_merito', function () {
+//     return view('orden_de_merito');
 // });
 
-// Route::get('/admin_usuarios', function () {
-//     return view('administrar_usuarios');
+// Route::get('/calificacion', function () {
+//     return view('calificacion');
 // });
 
-Route::get('/editar_usuario', function () {
-    return view('editar_usuario');
-});
-
-Route::get('/sign_in', function () {
-    return view('sign_in');
-});
-
-Route::get('/vacantes_abiertas', function () {
-    return view('vacantes_abiertas');
-});
-
-Route::get('/vacantes_cerradas', function () {
-    return view('vacantes_cerradas');
-});
-
-Route::get('/postulaciones', function () {
-    return view('postulaciones');
-});
-
-Route::get('/orden_de_merito', function () {
-    return view('orden_de_merito');
-});
-
-Route::get('/calificacion', function () {
-    return view('calificacion');
-});
-
-Route::get('/postulacion_vacante', function () {
-    return view('postulacion_vacante');
-});
+// Route::get('/postulacion_vacante', function () {
+//     return view('postulacion_vacante');
+// });
 
