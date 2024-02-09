@@ -35,16 +35,28 @@ return [
 
     'mailers' => [
         'smtp' => [
-            'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'transport' => env('MAIL_MAILER','smtp'),
+            // 'url' => env('MAIL_URL'),
+            'host' => env('MAIL_HOST', 'mail'),
+            'port' => env('MAIL_PORT', 1025),
+            'encryption' => env('MAIL_ENCRYPTION', null),
+            'username' => env('MAIL_USERNAME',null),
+            'password' => env('MAIL_PASSWORD',null),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            // 'local_domain' => env('MAIL_EHLO_DOMAIN'),
+
+            // ASI ESTABA ANTES
+            // 'transport' => 'smtp',
+            // 'url' => env('MAIL_URL'),
+            // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            // 'port' => env('MAIL_PORT', 587),
+            // 'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            // 'username' => env('MAIL_USERNAME'),
+            // 'password' => env('MAIL_PASSWORD'),
+            // 'timeout' => null,
+            // 'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
+
 
         'ses' => [
             'transport' => 'ses',
@@ -99,7 +111,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'tudirecciondecorreo@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
