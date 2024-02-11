@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Llamado;
 use App\Models\Postulacion;
 use Carbon\Carbon;
@@ -109,5 +110,25 @@ class PostulacionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function descargarCurriculum($postulacionId)
+    {
+        // Obtén la postulación y el usuario asociado
+        $postulacion = Postulacion::findOrFail($postulacionId);
+        $user = User::findOrFail($postulacion->usuario_id);
+        
+        // Verifica si el curriculum está almacenado en la base de datos
+        if ($postulacion->curriculum_vitae) {
+            // Obtén el contenido del PDF desde el BLOB
+            $pdfContent = $postulacion->curriculum_vitae;
+        
+            // Devuelve el archivo como respuesta
+            return response($pdfContent, 200)->header('Content-Type', 'application/pdf')
+                                              ->header('Content-Disposition', 'attachment; filename=' . $user->name . $user->last_name . '.pdf');
+        } else {
+            // Maneja la situación en la que el curriculum no existe en la base de datos
+            abort(404, 'El curriculum no pudo ser encontrado.');
+        }
     }
 }

@@ -43,11 +43,12 @@ Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, '
 Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 'destroy'])->name('eliminar_llamado');
 
 // Jefe de catedra
-Route::get('/vacantes_mi_catedra', [JefeCatedraController::class, 'vacantes_mi_catedra'])->name('vacantes_mi_catedra');
-Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
-
-Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
-
+Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
+    Route::get('/vacantes_mi_catedra', [JefeCatedraController::class, 'vacantes_mi_catedra'])->name('vacantes_mi_catedra');
+    Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
+    Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
+    Route::get('/descargar_curriculum/{postulacionId}', [PostulacionController::class, 'descargarCurriculum'])->name('descargar_curriculum');
+});
 
 // Rutas para el CRUD de usuarios
 Route::middleware(['auth', 'role:admin'])->group(function () {

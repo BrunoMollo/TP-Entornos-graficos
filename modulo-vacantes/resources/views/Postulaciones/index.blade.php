@@ -19,7 +19,7 @@
                         <td>{{ $postulacion->user->name }} {{ $postulacion->user->last_name }}</td>
                         <td>{{ $postulacion->user->email }}</td>
                         <td>
-                            {{--<a href="{{ route('descargar_curriculum', ['id' => $postulacion->user->id]) }}" class="btn btn-link">Descargar Curriculum</a> --}}
+                            <a href="{{ route('descargar_curriculum', ['postulacionId' => $postulacion->id]) }}" class="btn btn-link">Descargar Curriculum</a>
                         </td>
                         <td>
                             <button class="btn btn-primary">Calificar</button>
