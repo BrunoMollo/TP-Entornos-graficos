@@ -41,6 +41,7 @@ class PostulacionController extends Controller
             $request->validate([
                 'llamado_id' => 'required|exists:llamados,id',
                 'usuario_id' => 'required|exists:users,id',
+                'curriculum_vitae' => 'required|mimes:pdf|max:2048',
 
             ],
             [
@@ -50,6 +51,11 @@ class PostulacionController extends Controller
                 'usuario_id.exists' => 'El usuario no existe.',
             ]);
 
+            // Obtener el contenido del archivo
+            $cvContent = file_get_contents($request->file('curriculum_vitae')->getRealPath());
+            $request->merge([
+                'curriculum_vitae' => $cvContent,
+            ]);
 
             $llamado = Llamado::findOrFail($request->llamado_id);
             $hoy = Carbon::now();
@@ -60,7 +66,6 @@ class PostulacionController extends Controller
 
             $postulacion = Postulacion::create($request->all());
 
-
             //Opcion 1
             $response = response()->json(['data' => $postulacion, 'message' => ['Usted se a postulado exitosamente'], 'status'=> 201, 'success'=>true]);
             return redirect()->route('postulaciones.index')->with('response',$response);
@@ -70,7 +75,7 @@ class PostulacionController extends Controller
 
 
         }catch(\Exception $e){
-
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

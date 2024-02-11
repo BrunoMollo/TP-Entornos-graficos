@@ -13,6 +13,7 @@ class Postulacion extends Model
 
     protected $fillable = [
         'nombre',
+        'curriculum_vitae',
         'correo_electronico',
         'llamado_id',
         'usuario_id',
