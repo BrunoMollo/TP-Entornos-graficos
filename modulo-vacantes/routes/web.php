@@ -25,7 +25,7 @@ use Spatie\Permission\Models\Role;
 // Manejo por defecto las rutas de Login y Register
 Auth::routes();
 
-
+// TEST PARA MAIL, BORRAR DESPUES
 Route::get("/test/{dest}/{llamado}", [UserController::class,'test'])->name('test');
 
 //Vista inicial

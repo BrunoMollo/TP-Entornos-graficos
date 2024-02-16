@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('postulaciones', function (Blueprint $table) {
             $table->id();
-            $table->binary('curriculum_vitae')->nullable();
+            $table->string('curriculum_vitae')->nullable();
             $table->foreignId('llamado_id')->constrained('llamados');
             $table->foreignId('usuario_id')->constrained('users');
             $table->timestamps();

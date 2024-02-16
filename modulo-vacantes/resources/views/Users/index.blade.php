@@ -68,17 +68,17 @@
 
 
         
-    const response = (@json(session('response')));
-    console.log(response);
+    const response = (@json(session('response')))
+    console.log(response)
     if(response){
-        const successMessage = response.original.message.join('<br>');
+        const successMessage = response.original.message.join('<br>')
         if(response.original.success){
             Swal.fire('',successMessage,'success')
         }else{
             Swal.fire('Error',successMessage,'error')
 
         }
-    }
+    };
 
 </script>
 

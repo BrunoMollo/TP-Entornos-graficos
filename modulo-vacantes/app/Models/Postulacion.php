@@ -19,6 +19,7 @@ class Postulacion extends Model
         'usuario_id',
     ];
 
+
     public function llamado(){
         return $this->belongsTo(Llamado::class, 'llamado_id');
     }
