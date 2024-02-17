@@ -27,5 +27,9 @@ class Postulacion extends Model
     public function user(){
         return $this->belongsTo(User::class, 'usuario_id');
     }
+    
+    public function meritos(){
+        return $this -> belongsToMany(Merito::class, 'postulacion_meritos_puntaje')->withPivot('puntaje')->withTimestamps();
+    }
 
 }

@@ -33,13 +33,13 @@
                         <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin_llamados') }}">Administracion de llamados</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('ver*') ? 'active' : '' }}" href="#">Vacantes cerradas</a>
+                        <a class="nav-link {{ Request::is('ver*') ? 'active' : '' }}" href="{{ route('llamados_cerrados') }}">Vacantes cerradas</a>
                     </li>
                 @endrole
 
                 @role('jefe_catedra')
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('vacantes_mi_catedra*') ? 'active' : '' }}" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
+                        <a class="nav-link {{ Request::is('vacantes_mi_catedra*') || Request::is('generar_orden_de_merito*') || Request::is('calificar_postulacion*') || Request::is('*/postulaciones*') ? 'active' : '' }}" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
                     </li>
                 @endrole
             @endauth

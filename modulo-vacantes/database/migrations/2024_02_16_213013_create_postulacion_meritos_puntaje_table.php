@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('postulaciones', function (Blueprint $table) {
+        Schema::create('postulacion_meritos_puntaje', function (Blueprint $table) {
             $table->id();
-            $table->string('curriculum_vitae')->nullable();
-            $table->foreignId('llamado_id')->constrained('llamados');
-            $table->foreignId('usuario_id')->constrained('users');
+            $table->foreignId('postulacion_id')->constrained('postulaciones');
+            $table->foreignId('merito_id')->constrained('meritos');
+            $table->integer('puntaje')->nullable(true);
             $table->timestamps();
-            $table->unique(['usuario_id', 'llamado_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('postulaciones');
+        Schema::dropIfExists('postulacion_meritos_puntaje');
     }
 };

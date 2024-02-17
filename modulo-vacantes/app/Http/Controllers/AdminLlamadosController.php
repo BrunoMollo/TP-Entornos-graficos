@@ -9,10 +9,18 @@ use Carbon\Carbon;
 
 class AdminLlamadosController extends Controller
 {
-        public function admin_llamados()
+    public function admin_llamados()
     {
         $llamados = Llamado::with('catedra')->get();
         return view('Llamados.index', ['llamados' => $llamados]);
+    }
+
+    public function vacantes_cerradas()
+    {
+        
+        $hoy = Carbon::now();
+        $llamados = Llamado::where('fecha_cierre' ,'<', $hoy)->get();
+        return view('Vacantes.vacantes_cerradas', ['llamados' => $llamados]);
     }
 
     public function create()

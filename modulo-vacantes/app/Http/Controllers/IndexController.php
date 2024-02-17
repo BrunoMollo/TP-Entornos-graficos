@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Llamado;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -24,7 +25,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $llamados = Llamado::where('estado','abierto')->get();
+        $hoy = Carbon::now();
+        $llamados = Llamado::where('fecha_cierre' ,'>', $hoy)->get();
+        //$llamados = Llamado::where('estado','abierto')->get();
         return view('Index.index')->with(compact('llamados'));
     }
 }

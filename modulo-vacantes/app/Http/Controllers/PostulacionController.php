@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+use App\Models\Merito;
 use App\Models\User;
 use App\Models\Llamado;
 use App\Models\Postulacion;
 use Carbon\Carbon;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 
@@ -44,7 +47,7 @@ class PostulacionController extends Controller
         try{
             $request->validate([
                 'llamado_id' => 'required|exists:llamados,id',
-                'usuario_id' => 'required|exists:users,id',
+                'usuario_id' => 'required|exists:users,id|unique:postulaciones,usuario_id,null,null,llamado_id,' . $request->input('llamado_id'),
                 'curriculum_vitae' => 'required|mimes:pdf|max:2048',
 
             ],
@@ -53,6 +56,7 @@ class PostulacionController extends Controller
                 'llamado_id.exists' => 'El llamado no existe.',
                 'usuario_id.required' => 'El id del usuario es obligatorio.',
                 'usuario_id.exists' => 'El usuario no existe.',
+                'usuario_id.unique' => 'Ya se ha postulado a este llamado',
                 'curriculum_vitae.required' => 'El cirruculum es obligatorio',
                 'curriculum_vitae.mimes' => 'Solo se aceptan pdf.',
             ]);
@@ -83,13 +87,13 @@ class PostulacionController extends Controller
                 return redirect()->back()->with('response',$response);
             }
 
-            // $postulacion = Postulacion::create($request->all());
+            
             $postulacion = Postulacion::create([
                 'llamado_id' => $request->llamado_id,
                 'usuario_id' => $request->usuario_id,
                 'curriculum_vitae' => $rutaArchivoPDF,
             ]);
-
+            
             //Opcion 1
             //Data como null xq no puede serializar el PDF
             $response = response()->json(['data' => null, 'message' => ['Usted se a postulado exitosamente'], 'status'=> 201, 'success'=>true]);
@@ -99,7 +103,13 @@ class PostulacionController extends Controller
             // return redirect()->route('postulaciones.index')->with('success', 'Usted se a postulado exitosamente');
             
             
-        }catch(\Exception $e){
+        }catch(\Illuminate\Validation\ValidationException $e){
+            $errores = $e->errors();
+            $response = response()->json(['data' => null, 'message' => $errores, 'status'=> 422, 'success'=>false]);
+            return redirect()->back()->with('response', $response);
+
+        }
+        catch(\Exception $e){
             
             $response = response()->json(['data' => null, 'message' => $e->getMessage(), 'status'=> 501, 'success'=>false]);
             return redirect()->back()->with('response', $response);
@@ -182,6 +192,76 @@ class PostulacionController extends Controller
         }catch(\Exception $e){
             echo $e->getMessage();
         }
+    }
 
+    public function calificar_postulacion(Postulacion $postulacion){
+        try{
+            $meritos = Merito::all();
+            return view('Postulaciones.calificar_postulacion')->with(compact('postulacion','meritos'));
+        }catch(\Exception $e){
+            $response = response()->json(['data' => null, 'message' => ['Error al calificar la postulación: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
+            return redirect()->back()->with('response',$response);
+            
+        }
+    }
+
+        public function asignar_puntajes(Request $request,Postulacion $postulacion)
+    {
+        try{
+            //  $request->validate([
+            //      'llamado_id' => 'required|exists:llamados,id',
+            //  ],
+            // [
+            //     'llamado_id.required' => 'El id del llamado es obligatorio.',
+            // ]);
+            //Procesa y guarda los puntajes ingresados para cada mérito
+            foreach ($request->meritos as $meritoId => $puntaje) {
+                $postulacion->meritos()->syncWithoutDetaching([$meritoId => ['puntaje' => $puntaje]]);
+            }
+
+            $response = response()->json(['data' => null, 'message' => ['Calificación hecha correctamente'], 'status'=> 201, 'success'=>true]);
+            return redirect()->back()->with('response',$response);
+        }catch(\Illuminate\Validation\ValidationException $e){
+            $errores=[];
+            //  foreach( ['hola'=>'a'] as $nombre => $cont){
+            //      array_push($errores, $cont);
+
+            //     }
+            
+            $errorsValidaro = $e->validator->errors();
+            foreach($errorsValidaro as $nombreError => $error){
+                foreach($error as $e){
+                    array_push($errores, $e);
+                }
+            }
+            $response = response()->json(['data' => null, 'message' => $errores, 'status'=> 422, 'success'=>false]);
+            return redirect()->back()->with('response', $response);
+
+        }
+        catch(\Exception $e){
+            
+            $response = response()->json(['data' => null, 'message' => $e->getMessage(), 'status'=> 501, 'success'=>false]);
+            return redirect()->back()->with('response', $response);
+        }
+    }
+    public function editar_calificar_postulacion(Postulacion $postulacion)
+    {
+        try{
+            $meritos = Merito::all();
+            return view('Postulaciones.calificar_postulacion')->with(compact('postulacion','meritos'));   
+        }catch(\Exception $e){   
+            $response = response()->json(['data' => null, 'message' => $e->getMessage(), 'status'=> 501, 'success'=>false]);
+            return redirect()->back()->with('response', $response);
+        }
+    }
+
+    public function generar_orden_de_merito(String $idPostulacion){
+        try{
+            $postulacion = Postulacion::findOrFail($idPostulacion);
+            return view('Postulaciones.generar_orden_de_merito')->with(compact('postulacion'));
+        }catch(\Exception $e){
+            $response = response()->json(['data' => null, 'message' => ['Error al generar órden de mérito: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
+            return redirect()->back()->with('response',$response);
+        }
     }
 }

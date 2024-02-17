@@ -35,12 +35,15 @@ Route::redirect('/index', '/');
 
 
 // Administracion de llamados
-Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
-Route::get('/admin/nuevo_llamado', [AdminLlamadosController::class, 'create'])->name('nuevo_llamado');
-Route::post('/admin/llamados/guardar', [AdminLlamadosController::class, 'store'])->name('guardar_llamado');
-Route::get('/admin/llamados/editar/{id}', [AdminLlamadosController::class, 'edit'])->name('editar_llamado');
-Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, 'update'])->name('actualizar_llamado');
-Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 'destroy'])->name('eliminar_llamado');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
+    Route::get('/admin/nuevo_llamado', [AdminLlamadosController::class, 'create'])->name('nuevo_llamado');
+    Route::get('/admin/vacantes_cerradas', [AdminLlamadosController::class, 'vacantes_cerradas'])->name('vacantes_cerradas');
+    Route::post('/admin/llamados/guardar', [AdminLlamadosController::class, 'store'])->name('guardar_llamado');
+    Route::get('/admin/llamados/editar/{id}', [AdminLlamadosController::class, 'edit'])->name('editar_llamado');
+    Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, 'update'])->name('actualizar_llamado');
+    Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 'destroy'])->name('eliminar_llamado');
+});
 
 // Jefe de catedra
 Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
@@ -48,6 +51,12 @@ Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
     Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
     Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
     Route::get('/descargar_curriculum/{postulacionId}', [PostulacionController::class, 'descargarCurriculum'])->name('descargar_curriculum');
+    //CALIFICAR POSTULACION
+    Route::get('/calificar_postulacion/{postulacion}', [PostulacionController::class, 'calificar_postulacion'])->name('calificar_postulacion');
+    Route::post('/editar_puntajes/{postulacion}', [PostulacionController::class, 'editar_puntajes'])->name('editar_puntajes');
+    Route::post('/asignar_puntajes/{postulacion}', [PostulacionController::class, 'asignar_puntajes'])->name('asignar_puntajes');
+    // ORDEN DE MERITO
+    Route::get('/generar_orden_de_merito/{postulacionId}', [PostulacionController::class, 'generar_orden_de_merito'])->name('generar_orden_de_merito');
 });
 
 // Rutas para el CRUD de usuarios
