@@ -33,7 +33,7 @@
                         <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin_llamados') }}">Administracion de llamados</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('ver*') ? 'active' : '' }}" href="{{ route('llamados_cerrados') }}">Vacantes cerradas</a>
+                        <a class="nav-link {{ Request::is('ver*') ? 'active' : '' }}" href="{{ route('vacantes_cerradas') }}">Vacantes cerradas</a>
                     </li>
                 @endrole
 

@@ -63,7 +63,6 @@ Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
-
 //Esto hace el resource 
 // GET      /users                index       users.index
 // GET      /users/create         create      users.create
@@ -72,6 +71,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // GET      /users/{user}/edit    edit        users.edit
 // PUT      /users/{user}         update      users.update
 // DELETE   /users/{user}         destroy     users.destroy
+
+
 
 // Postulación user
  Route::middleware(['auth','role:postulante'])->group(function () {

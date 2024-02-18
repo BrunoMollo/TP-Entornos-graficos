@@ -22,13 +22,13 @@
                         </td>
                             <td>
                                 <a href='{{ route('calificar_postulacion',$postulacion->id) }}' class="btn btn-primary">
-                                    @if( $postulacion->meritos()->withPivot('puntaje')->get() )
+                                    @if( count($postulacion->meritos()->withPivot('puntaje')->get()) > 0 )
                                         Editar
                                     @else
                                         Calificar
                                     @endif
                                 </a>
-                                @if( $postulacion->meritos()->withPivot('puntaje')->get() )
+                                @if( count($postulacion->meritos()->withPivot('puntaje')->get()) > 0)
                                     <i class='fa fa-check text-success ms-2 fs-3'></i>
                                 @endif
                             </td>

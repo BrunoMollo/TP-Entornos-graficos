@@ -60,19 +60,8 @@ class PostulacionController extends Controller
                 'curriculum_vitae.required' => 'El cirruculum es obligatorio',
                 'curriculum_vitae.mimes' => 'Solo se aceptan pdf.',
             ]);
-
-            // Obtener el contenido del archivo
-            // $cvContent = file_get_contents($request->file('curriculum_vitae')->getRealPath());
-            // $cvContent = file_get_contents($request->file('curriculum_vitae')->getPathname());
             
-            // $request->merge([
-            //     'curriculum_vitae' => $cvContent,
-            // ]);
-            
-            
-            
-            // GUARDAR EN STORAGE
-            
+            // GUARDAR EN STORAGE            
             $archivoPDF = $request->file('curriculum_vitae');
             // Guardar el archivo PDF en el sistema de archivos
             $rutaArchivoPDF = $archivoPDF->store('pdfs');
@@ -96,7 +85,7 @@ class PostulacionController extends Controller
             
             //Opcion 1
             //Data como null xq no puede serializar el PDF
-            $response = response()->json(['data' => null, 'message' => ['Usted se a postulado exitosamente'], 'status'=> 201, 'success'=>true]);
+            $response = response()->json(['data' => null, 'message' => ['Usted se ha postulado exitosamente'], 'status'=> 201, 'success'=>true]);
             return redirect()->back()->with('response',$response);
             
             //Opcion 2
@@ -171,14 +160,6 @@ class PostulacionController extends Controller
                 // Obtén el contenido del PDF desde el BLOB
                 $rutaPdf = $postulacion->curriculum_vitae;
 
-                
-                // Devuelve el archivo como respuesta
-                //  return response($pdfContent, 200)->header('Content-Type', $pdfContent->mime)
-                //                                    ->header('Content-Disposition', 'attachment; filename=' . $user->name . $user->last_name . '.pdf');
-            
-                // 
-
-
                 $nombrePDF = $user->name . $user->last_name . '.pdf';
                 if(!Storage::exists($rutaPdf)){
                     abort(404, 'El curriculum no pudo ser encontrado.');
@@ -205,15 +186,21 @@ class PostulacionController extends Controller
         }
     }
 
-        public function asignar_puntajes(Request $request,Postulacion $postulacion)
+    public function asignar_puntajes(Request $request,Postulacion $postulacion)
     {
         try{
-            //  $request->validate([
-            //      'llamado_id' => 'required|exists:llamados,id',
-            //  ],
-            // [
-            //     'llamado_id.required' => 'El id del llamado es obligatorio.',
-            // ]);
+
+
+            $request->validate([
+                  'meritos' => 'required|array',
+                  'meritos.*' => 'required|integer|between:1,10',
+              ],
+             [
+                 'meritos.required' => 'Debe puntuar los mértios.',
+                 'meritos.*.between' => 'El puntaje del debe ser entre :min y :max.',
+                 'meritos.*.integer' => 'El puntaje debe ser un número entero.',
+                 'meritos.*.required' => 'Debe puntuar todos los méritos .',
+             ]);
             //Procesa y guarda los puntajes ingresados para cada mérito
             foreach ($request->meritos as $meritoId => $puntaje) {
                 $postulacion->meritos()->syncWithoutDetaching([$meritoId => ['puntaje' => $puntaje]]);
@@ -228,18 +215,16 @@ class PostulacionController extends Controller
 
             //     }
             
-            $errorsValidaro = $e->validator->errors();
-            foreach($errorsValidaro as $nombreError => $error){
-                foreach($error as $e){
-                    array_push($errores, $e);
-                }
-            }
-            $response = response()->json(['data' => null, 'message' => $errores, 'status'=> 422, 'success'=>false]);
+            $errorsValidaro = $e->validator->errors()->all();
+            // foreach($errorsValidaro as $nombreError => $error){
+            //     foreach($error as $e){
+            //         array_push($errores, $e);
+            //     }
+            // }
+            $response = response()->json(['data' => null, 'message' => $errorsValidaro, 'status'=> 422, 'success'=>false]);
             return redirect()->back()->with('response', $response);
-
         }
         catch(\Exception $e){
-            
             $response = response()->json(['data' => null, 'message' => $e->getMessage(), 'status'=> 501, 'success'=>false]);
             return redirect()->back()->with('response', $response);
         }

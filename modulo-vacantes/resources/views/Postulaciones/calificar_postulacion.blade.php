@@ -31,7 +31,7 @@
                         <tr>
                             <td class="text-start" colspan="4">{{$merito->nombre}}</td>
                             <td>
-                                <input value='{{ $meritosConPuntajes ? $meritosConPuntajes->where('id',$merito->id)->first()->pivot->puntaje  : '' }}' type='number' min='0' max='10' id="merito_{{ $merito->id }}" name="meritos[{{ $merito->id }}]">
+                                <input required value='{{ count($meritosConPuntajes) > 0 ? $meritosConPuntajes->where('id',$merito->id)->first()->pivot->puntaje  : '' }}' type='number' min='0' max='10' id="merito_{{ $merito->id }}" name="meritos[{{ $merito->id }}]">
                             </td>
                         </tr>
                         @endforeach
