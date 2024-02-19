@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('content')
 @php
-    $meritosConPuntajes = $postulacion->meritos()->withPivot('puntaje')->get()
+    $meritosConPuntajes = $postulacion->meritos()->withPivot('puntaje')->get();
+    $total = 0;
+    foreach($meritosConPuntajes as $merito){
+        $total+=$merito->pivot->puntaje;
+    }
 @endphp
     <div class="container">
         <div class="row justify-content-center">
@@ -35,8 +39,12 @@
                             </td>
                         </tr>
                         @endforeach
+                        <tr class='text-center' >
+                            <td colspan='2' class='fs-4'><b>Total: {{$total}}</b></td>
+                        </tr>   
                     </tbody>
                 </table>
+                
             </div>
             <div class="row d-flex justify-content-center">
                 <a href='{{url()->previous()}}' class="me-1 col-3 btn btn-primary">Volver</a>
@@ -51,7 +59,11 @@
     if(response){
         const successMessage = Array.isArray(response.original.message) ?  response.original.message.join('<br>') : response.original.message
         if(response.original.success){
-            Swal.fire('',successMessage,'success')
+            Swal.fire('',successMessage,'success').then((res)=>{
+                if(res){
+                    window.location.href='/vacantes_mi_catedra'
+                }
+            })
         }else{
             Swal.fire('Error',successMessage,'error')
         }

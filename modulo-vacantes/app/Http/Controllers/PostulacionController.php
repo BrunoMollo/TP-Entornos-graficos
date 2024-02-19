@@ -21,7 +21,7 @@ class PostulacionController extends Controller
      */
     public function index()
     {
-        //return view("Postulaciones.create_postulacion");
+        return redirect()->back();
     }
 
     /**
@@ -32,6 +32,10 @@ class PostulacionController extends Controller
         try{
             //ModelNotFoundException
             $llamado = Llamado::findOrFail($llamadoId);
+            $hoy = Carbon::now();
+            if($hoy > $llamado->fecha_cierre){
+                return redirect()->back();
+            }
             return view("Postulaciones.create_postulacion", compact("llamado"));
         }catch(\Exception $e){
             //VER SI CAMBIO ESTO para SweetAlert

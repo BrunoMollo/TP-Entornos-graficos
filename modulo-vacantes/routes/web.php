@@ -28,17 +28,19 @@ Auth::routes();
 // TEST PARA MAIL, BORRAR DESPUES
 Route::get("/test/{dest}/{llamado}", [UserController::class,'test'])->name('test');
 
-//Vista inicial
+//Vista inicial (Vacantes abiertas)
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::redirect('/home', '/');
 Route::redirect('/index', '/');
+// Vista Vacantes Cerradas
+Route::get('/vacantes_cerradas', [AdminLlamadosController::class, 'vacantes_cerradas'])->name('vacantes_cerradas');
+
 
 
 // Administracion de llamados
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/administrar_llamados', [AdminLlamadosController::class, 'admin_llamados'])->name('admin_llamados');
     Route::get('/admin/nuevo_llamado', [AdminLlamadosController::class, 'create'])->name('nuevo_llamado');
-    Route::get('/admin/vacantes_cerradas', [AdminLlamadosController::class, 'vacantes_cerradas'])->name('vacantes_cerradas');
     Route::post('/admin/llamados/guardar', [AdminLlamadosController::class, 'store'])->name('guardar_llamado');
     Route::get('/admin/llamados/editar/{id}', [AdminLlamadosController::class, 'edit'])->name('editar_llamado');
     Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, 'update'])->name('actualizar_llamado');

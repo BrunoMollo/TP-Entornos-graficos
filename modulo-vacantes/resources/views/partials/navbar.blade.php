@@ -24,6 +24,13 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
 
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('/') || Request::is('postulaciones*') ? 'active' : '' }}  href="/">Vacantes abiertas</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('vacantes_cerradas*') ? 'active' : '' }}" href="{{ route('vacantes_cerradas') }}">Vacantes cerradas</a>
+            </li>
             @auth 
                 @role('admin')
                     <li class="nav-item">
@@ -32,22 +39,15 @@
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin_llamados') }}">Administracion de llamados</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('ver*') ? 'active' : '' }}" href="{{ route('vacantes_cerradas') }}">Vacantes cerradas</a>
-                    </li>
-                @endrole
-
-                @role('jefe_catedra')
+                    @endrole
+                    
+                    @role('jefe_catedra')
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('vacantes_mi_catedra*') || Request::is('generar_orden_de_merito*') || Request::is('calificar_postulacion*') || Request::is('*/postulaciones*') ? 'active' : '' }}" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
                     </li>
                 @endrole
             @endauth
-
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"  href="/">Vacantes abiertas</a>
-            </li>
-
+            
         </ul>
 
         <!-- Right Side Of Navbar -->
