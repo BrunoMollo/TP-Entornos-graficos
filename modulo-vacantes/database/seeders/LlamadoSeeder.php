@@ -24,7 +24,6 @@ class LlamadoSeeder extends Seeder
             'fecha_apertura' => Carbon::now(),
             'fecha_cierre' => '2023-09-12',
             'catedra_id' => 1,
-            'estado' => 'abierto',
         ]);
 
         // Base de Datos
@@ -34,7 +33,6 @@ class LlamadoSeeder extends Seeder
             'fecha_apertura' => Carbon::now(),
             'fecha_cierre' => '2024-08-07',
             'catedra_id' => 2,
-            'estado' => 'abierto',
         ]);
     }
 }

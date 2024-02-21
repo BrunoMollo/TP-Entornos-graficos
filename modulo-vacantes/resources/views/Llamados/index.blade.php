@@ -95,7 +95,7 @@
                         reverseButtons: true
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            console.log('a')
+                            console.log(response.original.id)
                             document.getElementById(`form-eliminar-postulaciones-${response.original.id}`).submit();
                         }
                     });

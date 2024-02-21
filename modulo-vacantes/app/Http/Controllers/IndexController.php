@@ -27,7 +27,6 @@ class IndexController extends Controller
     {
         $hoy = Carbon::now();
         $llamados = Llamado::where('fecha_cierre' ,'>', $hoy)->get();
-        //$llamados = Llamado::where('estado','abierto')->get();
         return view('Index.index')->with(compact('llamados'));
     }
 }

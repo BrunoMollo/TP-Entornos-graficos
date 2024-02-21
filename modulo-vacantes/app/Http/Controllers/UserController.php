@@ -8,6 +8,7 @@ use App\Models\Llamado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Mail;
 use Spatie\Permission\Models\Role;
@@ -170,13 +171,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try{
-    
+            DB::beginTransaction();
             $user->delete();
-        
+            DB::commit();
             $response = response()->json(['data' => null, 'message' => ['Usuario eliminado exitosamente'], 'status'=> 204, 'success'=>true]);
             return redirect()->route('users.index')->with('response',$response);
             
         }catch(\Exception $e){
+            DB::rollBack();
             $response = response()->json(['data' => null, 'message' => ['Error al eliminar el usuario: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->route('users.index')->with('response',$response);
         }
@@ -184,7 +186,7 @@ class UserController extends Controller
     public function destroyCascade(User $user)
     {
         try{
-    
+            DB::beginTransaction();
             $user->delete();
         
             $response = response()->json(['data' => null, 'message' => ['Usuario eliminado exitosamente'], 'status'=> 204, 'success'=>true]);

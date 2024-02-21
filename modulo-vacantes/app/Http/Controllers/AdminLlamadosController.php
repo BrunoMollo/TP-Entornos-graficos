@@ -55,9 +55,9 @@ class AdminLlamadosController extends Controller
                 'fecha_apertura' => Carbon::now(),
                 'fecha_cierre' => $request->input('fecha_cierre'),
             ]);
-        
+            
             // return redirect()->route('admin_llamados')->with('success', 'Llamado creado exitosamente');
-            $response = response()->json(['data' => $llamado, 'message' => ['Llamado creado exitosamente'], 'status'=> 201, 'success'=>true]);
+            $response = response()->json( ['data' => $llamado, 'message' => ['Llamado creado exitosamente'], 'status'=> 201, 'success'=>true] );
     
             // Redirigir a la vista /users/create
             return redirect()->back()->with('response', $response);

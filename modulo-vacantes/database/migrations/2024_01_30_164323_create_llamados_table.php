@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('descripcion');
             $table->dateTime('fecha_apertura');
             $table->dateTime('fecha_cierre');
-            $table->enum('estado', ['abierto', 'cerrado'])->default('abierto'); 
             $table->foreignId('catedra_id')->constrained('catedras');
             $table->timestamps();
         });
