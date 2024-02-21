@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/llamados/editar/{id}', [AdminLlamadosController::class, 'edit'])->name('editar_llamado');
     Route::put('/admin/llamados/actualizar/{id}', [AdminLlamadosController::class, 'update'])->name('actualizar_llamado');
     Route::delete('/admin/llamados/eliminar/{id}', [AdminLlamadosController::class, 'destroy'])->name('eliminar_llamado');
+    Route::delete('/admin/llamados/eliminarConPostulaciones/{id}', [AdminLlamadosController::class, 'destroyConPostulaciones'])->name('eliminar_llamado_con_postulaciones');
 });
 
 // Jefe de catedra

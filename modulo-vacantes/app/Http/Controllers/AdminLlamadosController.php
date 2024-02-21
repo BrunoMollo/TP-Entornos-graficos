@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\Llamado;
 use App\Models\Catedra;
@@ -125,6 +126,30 @@ class AdminLlamadosController extends Controller
     {
         try{
             $llamado = Llamado::findOrFail($id);
+            $llamado->delete();
+    
+            $response = response()->json(['data' => null, 'message' => ['Llamado eliminado'], 'status'=> 204, 'success'=>true]);
+            return redirect()->back()->with('response',$response);
+            
+        }catch(QueryException $e){
+            $response = response()->json(['data' => null, 'message' => ['No puede eliminar este llamado porque hay postulaciónes asociadas a este, debe eliminar las postulaciones también',], 'status'=> 422 , 'success'=>false,'id'=> $id ]);
+            return redirect()->back()->with('response',$response);
+        }
+        catch(\Exception $e){
+            $response = response()->json(['data' => null, 'message' => ['Error al eliminar el llamado: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
+            return redirect()->back()->with('response',$response);
+        }
+    }
+
+    public function destroyConPostulaciones($id)
+    {
+        try{
+            $llamado = Llamado::findOrFail($id);
+
+            // Eliminar todas las postulaciones asociadas al llamado
+            $llamado->postulaciones()->delete();
+
+            // Eliminar el llamado
             $llamado->delete();
     
             $response = response()->json(['data' => null, 'message' => ['Llamado eliminado'], 'status'=> 204, 'success'=>true]);

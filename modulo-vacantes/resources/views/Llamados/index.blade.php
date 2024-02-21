@@ -40,6 +40,10 @@
                 <a href="{{ url('/admin/nuevo_llamado') }}" class="btn btn-success">Crear Nuevo Llamado</a>
             </div>
         </div>
+        <form id="form-eliminar-postulaciones-{{ $llamado->id }}" action="{{ route('eliminar_llamado_con_postulaciones', ['id' => $llamado->id]) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
     </div>
     
 <!-- Script de JavaScript para la confirmación -->
@@ -76,7 +80,27 @@
         if(response.original.success){
             Swal.fire('',successMessage,'success')
         }else{
-            Swal.fire('Error',successMessage,'error')
+            Swal.fire('Error',successMessage,'error').then((res)=>{
+                if(res && response.original.id){
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: 'Se eliminarán todas las postulaciones asociadas a este llamado.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar',
+                        cancelButtonColor: '#6c757d', 
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            console.log('a')
+                            document.getElementById(`form-eliminar-postulaciones-${response.original.id}`).submit();
+                        }
+                    });
+                }
+            })
         }
     };
 
