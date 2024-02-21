@@ -53,7 +53,6 @@ class PostulacionController extends Controller
                 'llamado_id' => 'required|exists:llamados,id',
                 'usuario_id' => 'required|exists:users,id|unique:postulaciones,usuario_id,null,null,llamado_id,' . $request->input('llamado_id'),
                 'curriculum_vitae' => 'required|mimes:pdf|max:2048',
-
             ],
             [
                 'llamado_id.required' => 'El id del llamado es obligatorio.',
@@ -69,8 +68,6 @@ class PostulacionController extends Controller
             $archivoPDF = $request->file('curriculum_vitae');
             // Guardar el archivo PDF en el sistema de archivos
             $rutaArchivoPDF = $archivoPDF->store('pdfs');
-
-
 
             $llamado = Llamado::findOrFail($request->llamado_id);
             $hoy = Carbon::now();
@@ -92,21 +89,17 @@ class PostulacionController extends Controller
             $response = response()->json(['data' => null, 'message' => ['Usted se ha postulado exitosamente'], 'status'=> 201, 'success'=>true]);
             return redirect()->back()->with('response',$response);
             
-            //Opcion 2
-            // return redirect()->route('postulaciones.index')->with('success', 'Usted se a postulado exitosamente');
             
             
         }catch(\Illuminate\Validation\ValidationException $e){
-            $errores = $e->errors();
-            $response = response()->json(['data' => null, 'message' => $errores, 'status'=> 422, 'success'=>false]);
+            // $errores = $e->errors();
+            $errorsValidacion = $e->validator->errors()->all();
+            $response = response()->json(['data' => null, 'message' => $errorsValidacion, 'status'=> 422, 'success'=>false]);
             return redirect()->back()->with('response', $response);
-
         }
         catch(\Exception $e){
-            
             $response = response()->json(['data' => null, 'message' => $e->getMessage(), 'status'=> 501, 'success'=>false]);
             return redirect()->back()->with('response', $response);
-            // return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

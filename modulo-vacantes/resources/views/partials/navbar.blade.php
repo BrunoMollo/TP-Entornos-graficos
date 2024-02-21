@@ -1,4 +1,4 @@
-<div class="container mx-0 ">
+<div class="container">
     <a href="{{ url('/') }}">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="29.4000000pt" height="29.0000000pt"
             viewBox="0 0 184.000000 223.000000" preserveAspectRatio="xMidYMid meet">
@@ -25,7 +25,7 @@
         <ul class="navbar-nav me-auto">
 
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('/') || Request::is('postulaciones*') ? 'active' : '' }}  href="/">Vacantes abiertas</a>
+                <a class="nav-link {{ Request::is('/') || Request::is('postulaciones*') ? 'active' : '' }}"  href="/">Vacantes abiertas</a>
             </li>
             
             <li class="nav-item">

@@ -38,7 +38,7 @@
             @include('partials.navbar')
         </nav>
 
-        <main class="py-4 mb-3 flex-grow-1">
+        <main class="py-4 my-3 flex-grow-1 d-flex align-items-center" style='min-height:100vh'>
             @yield('content')
         </main>
         <footer class="footer bg-secondary text-light p-1 mt-3">
