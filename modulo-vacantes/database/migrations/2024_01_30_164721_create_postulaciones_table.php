@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('curriculum_vitae')->nullable();
             $table->foreignId('llamado_id')->constrained('llamados');
-            $table->foreignId('usuario_id')->constrained('users');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['usuario_id', 'llamado_id']);
         });
