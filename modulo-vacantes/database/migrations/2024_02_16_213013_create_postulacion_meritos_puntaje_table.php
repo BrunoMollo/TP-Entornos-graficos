@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('postulacion_meritos_puntaje', function (Blueprint $table) {
             $table->id();
             $table->foreignId('postulacion_id')->constrained('postulaciones')->onDelete('cascade');
-            $table->foreignId('merito_id')->constrained('meritos')->onDelete('cascade');
+            $table->foreignId('merito_id')->constrained('meritos');
             $table->integer('puntaje')->nullable(true);
             $table->timestamps();
         });

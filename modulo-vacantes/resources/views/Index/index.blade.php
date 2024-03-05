@@ -63,38 +63,15 @@
         </div>
     </div>
 
-<script>
+<script src="{{ mix('resources/js/shared.js') }}" defer></script>
+<script src="{{ mix('resources/js/Index/index.js') }}" defer></script>
 
-    const aceptar = (postId)=>{
-             Swal.fire({
-                 title: '¿Estás seguro?',
-                 text: "¡Se cancelará tu postulación!",
-                 icon: 'warning',
-                 showCancelButton: true,
-                 confirmButtonColor: '#d33',
-                 cancelButtonColor: '#3085d6',
-                 confirmButtonText: 'Sí, cancelar',
-                 cancelButtonText: 'Cancelar',
-                 cancelButtonColor: '#6c757d', 
-                 reverseButtons: true
-             }).then((res)=>{
-                 console.log('epa')
-                 if(res.isConfirmed){
-                    document.getElementById(`cancelar-postulacion-${postId}`).submit()
-                 }
-             })
-    }
-
-    const response = (@json(session('response')))
-    console.log(response)
-    if(response){
-        const successMessage = response.original.message.join('<br>')
-        if(response.original.success){
-            Swal.fire('Éxito',successMessage,'success')
-        }else{
-            Swal.fire('Error',successMessage,'error')
-        }
-    }
-
+<script >        
+const response = (@json(session('response')))
+document.addEventListener("DOMContentLoaded", ()=> {    
+    handleMessage(response);
+});
 </script>
 @endsection
+
+

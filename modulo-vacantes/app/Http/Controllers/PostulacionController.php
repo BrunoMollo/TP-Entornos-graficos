@@ -10,6 +10,7 @@ use App\Models\Postulacion;
 use Carbon\Carbon;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 use Illuminate\Support\Facades\Storage;
@@ -133,13 +134,16 @@ class PostulacionController extends Controller
     public function destroy(String $postulacionId)
     {
         try{
-            // echo $postulacionId;
+            DB::beginTransaction();
+            
             Postulacion::findOrFail($postulacionId)->delete();
-        
+            
+            DB::commit();
             $response = response()->json(['data' => null, 'message' => ['Postulación cancelada'], 'status'=> 204, 'success'=>true]);
             return redirect()->back()->with('response',$response);
             
         }catch(\Exception $e){
+            DB::rollBack();
             $response = response()->json(['data' => null, 'message' => ['Error al cancelar la postulación: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->back()->with('response',$response);
         }
@@ -206,18 +210,10 @@ class PostulacionController extends Controller
             $response = response()->json(['data' => null, 'message' => ['Calificación hecha correctamente'], 'status'=> 201, 'success'=>true]);
             return redirect()->back()->with('response',$response);
         }catch(\Illuminate\Validation\ValidationException $e){
-            $errores=[];
-            //  foreach( ['hola'=>'a'] as $nombre => $cont){
-            //      array_push($errores, $cont);
 
-            //     }
             
             $errorsValidaro = $e->validator->errors()->all();
-            // foreach($errorsValidaro as $nombreError => $error){
-            //     foreach($error as $e){
-            //         array_push($errores, $e);
-            //     }
-            // }
+
             $response = response()->json(['data' => null, 'message' => $errorsValidaro, 'status'=> 422, 'success'=>false]);
             return redirect()->back()->with('response', $response);
         }

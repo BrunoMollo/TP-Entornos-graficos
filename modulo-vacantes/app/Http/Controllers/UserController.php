@@ -183,20 +183,20 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('response',$response);
         }
     }
-    public function destroyCascade(User $user)
-    {
-        try{
-            DB::beginTransaction();
-            $user->delete();
+    // public function destroyCascade(User $user)
+    // {
+    //     try{
+    //         DB::beginTransaction();
+    //         $user->delete();
         
-            $response = response()->json(['data' => null, 'message' => ['Usuario eliminado exitosamente'], 'status'=> 204, 'success'=>true]);
-            return redirect()->route('users.index')->with('response',$response);
+    //         $response = response()->json(['data' => null, 'message' => ['Usuario eliminado exitosamente'], 'status'=> 204, 'success'=>true]);
+    //         return redirect()->route('users.index')->with('response',$response);
             
-        }catch(\Exception $e){
-            $response = response()->json(['data' => null, 'message' => ['Error al eliminar el usuario: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
-            return redirect()->route('users.index')->with('response',$response);
-        }
-    }
+    //     }catch(\Exception $e){
+    //         $response = response()->json(['data' => null, 'message' => ['Error al eliminar el usuario: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
+    //         return redirect()->route('users.index')->with('response',$response);
+    //     }
+    // }
 
     public function test(String $dest, Llamado $llamado){
         $llam= Llamado::find($llamado)->first();

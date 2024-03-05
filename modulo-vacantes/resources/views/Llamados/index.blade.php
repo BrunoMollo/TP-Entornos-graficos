@@ -24,6 +24,7 @@
                                 <td>{{ $llamado->descripcion }}</td>
                                 <td>{{ $llamado->fecha_cierre }}</td>
                                 <td class='text-center'>
+                                    <a href="{{ route('postulaciones', ['llamado' => $llamado]) }}" class="btn btn-warning mb-2 mb-lg-0">Ver postulaciones</a>
                                     <a href="{{ route('editar_llamado', ['id' => $llamado->id]) }}" class="btn btn-primary mb-2 mb-lg-0">Editar</a>
                                     <button type="button" class="btn btn-danger" onclick="aceptar({{ $llamado->id }})">Eliminar</button>
                                     <form id="form-eliminar-{{ $llamado->id }}" action="{{ route('eliminar_llamado', ['id' => $llamado->id]) }}" method="POST" style="display: none;">
@@ -47,62 +48,12 @@
     </div>
     
 <!-- Script de JavaScript para la confirmación -->
-<script>
-    // function confirmarEliminar(llamadoId) {
-    //     if (confirm('¿Estás seguro de que deseas eliminar este llamado?')) {
-    //         // Si el usuario confirma, enviar el formulario de eliminación
-    //         document.getElementById('form-eliminar-' + llamadoId).submit();
-    //     }
-    // }
+<script src="{{ mix('resources/js/Llamado/index.js') }}" defer></script>
 
-    const aceptar = (id)=>{
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminarlo',
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#6c757d', 
-            reverseButtons: true
-        }).then((res)=>{
-            if(res.isConfirmed){
-                document.getElementById(`form-eliminar-${id}`).submit();
-        }})
-    }
-
-    const response = (@json(session('response')))
-    console.log(response)
-    if(response){
-        const successMessage = Array.isArray(response.original.message) ?  response.original.message.join('<br>') : response.original.message
-        if(response.original.success){
-            Swal.fire('',successMessage,'success')
-        }else{
-            Swal.fire('Error',successMessage,'error').then((res)=>{
-                if(res && response.original.id){
-                    Swal.fire({
-                        title: '¿Estás seguro?',
-                        text: 'Se eliminarán todas las postulaciones asociadas a este llamado.',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Sí, eliminar',
-                        cancelButtonText: 'Cancelar',
-                        cancelButtonColor: '#6c757d', 
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            console.log(response.original.id)
-                            document.getElementById(`form-eliminar-postulaciones-${response.original.id}`).submit();
-                        }
-                    });
-                }
-            })
-        }
-    };
-
+<script >        
+const response = (@json(session('response')))
+document.addEventListener("DOMContentLoaded", ()=> {    
+    indexLlamadoMessage(response);
+});
 </script>
 @endsection

@@ -8,6 +8,8 @@ use App\Models\Llamado;
 use App\Models\Catedra;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
+
 
 class AdminLlamadosController extends Controller
 {
@@ -125,17 +127,23 @@ class AdminLlamadosController extends Controller
     public function destroy($id)
     {
         try{
+            DB::beginTransaction();
+            
             $llamado = Llamado::findOrFail($id);
             $llamado->delete();
-    
+            
+            DB::commit();
+
             $response = response()->json(['data' => null, 'message' => ['Llamado eliminado'], 'status'=> 204, 'success'=>true]);
             return redirect()->back()->with('response',$response);
             
         }catch(QueryException $e){
-            $response = response()->json(['data' => null, 'message' => ['No puede eliminar este llamado porque hay postulaciónes asociadas a este, debe eliminar las postulaciones también',], 'status'=> 422 , 'success'=>false,'id'=> $id ]);
+            DB::rollBack();
+            $response = response()->json(['data' => null, 'message' => ['Este llamado tiene postulaciones, estas se eliminaran también',], 'status'=> 422 , 'success'=>false,'id'=> $id ]);
             return redirect()->back()->with('response',$response);
         }
         catch(\Exception $e){
+            DB::rollBack();
             $response = response()->json(['data' => null, 'message' => ['Error al eliminar el llamado: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->back()->with('response',$response);
         }
@@ -144,6 +152,7 @@ class AdminLlamadosController extends Controller
     public function destroyConPostulaciones($id)
     {
         try{
+            DB::beginTransaction();
             $llamado = Llamado::findOrFail($id);
 
             // Eliminar todas las postulaciones asociadas al llamado
@@ -152,10 +161,13 @@ class AdminLlamadosController extends Controller
             // Eliminar el llamado
             $llamado->delete();
     
+            DB::commit();
+
             $response = response()->json(['data' => null, 'message' => ['Llamado eliminado'], 'status'=> 204, 'success'=>true]);
             return redirect()->back()->with('response',$response);
             
         }catch(\Exception $e){
+            DB::rollBack();
             $response = response()->json(['data' => null, 'message' => ['Error al eliminar el llamado: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->back()->with('response',$response);
         }

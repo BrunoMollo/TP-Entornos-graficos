@@ -1,4 +1,5 @@
 const handleMessage = (response)=>{
+    console.log(response)
     if (response) {
         const successMessage = response.original.message.join('<br>')
         if (response.original.success) {
@@ -12,4 +13,3 @@ const handleMessage = (response)=>{
 const test = (response)=>{
     console.log(response)
 }
-

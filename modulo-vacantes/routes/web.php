@@ -48,12 +48,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/llamados/eliminarConPostulaciones/{id}', [AdminLlamadosController::class, 'destroyConPostulaciones'])->name('eliminar_llamado_con_postulaciones');
 });
 
+
+// Jefe de catedra y Admin
+Route::middleware(['auth', 'role:jefe_catedra|admin'])->group(function () {
+    Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
+    Route::get('/descargar_curriculum/{postulacionId}', [PostulacionController::class, 'descargarCurriculum'])->name('descargar_curriculum');
+  
+});
+
+
 // Jefe de catedra
 Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
     Route::get('/vacantes_mi_catedra', [JefeCatedraController::class, 'vacantes_mi_catedra'])->name('vacantes_mi_catedra');
-    Route::get('/{llamado}/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('postulaciones');
-    Route::get('/jefe_catedra/postulaciones', [JefeCatedraController::class, 'postulaciones'])->name('jefe_catedra.postulaciones');
-    Route::get('/descargar_curriculum/{postulacionId}', [PostulacionController::class, 'descargarCurriculum'])->name('descargar_curriculum');
     //CALIFICAR POSTULACION
     Route::get('/calificar_postulacion/{postulacion}', [PostulacionController::class, 'calificar_postulacion'])->name('calificar_postulacion');
     Route::post('/editar_puntajes/{postulacion}', [PostulacionController::class, 'editar_puntajes'])->name('editar_puntajes');

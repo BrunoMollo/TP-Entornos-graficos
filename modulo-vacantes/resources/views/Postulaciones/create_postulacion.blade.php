@@ -48,21 +48,12 @@
         </div>
     </div>
 
-    <script>
-        const response = (@json(session('response')))
-        console.log(response)
-        if(response){
-            const successMessage = Array.isArray(response.original.message) ?  response.original.message.join('<br>') : response.original.message
-            if(response.original.success){
-                Swal.fire('',successMessage,'success').then((res)=>{
-                    if(res){
-                        //console.log('a')
-                        window.location.href='/'
-                    }
-                })
-            }else{
-                Swal.fire('Error',successMessage,'error')
-            }
-        }
-    </script>
+<script src="{{ mix('resources/js/Postulacion/index.js') }}" defer></script>
+
+<script >        
+const response = (@json(session('response')))
+document.addEventListener("DOMContentLoaded", ()=> {    
+    createPostulacionMessage(response);
+});
+</script>
 @endsection

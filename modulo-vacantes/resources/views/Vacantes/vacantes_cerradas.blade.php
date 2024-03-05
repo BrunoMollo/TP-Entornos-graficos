@@ -45,17 +45,13 @@
        
     </div>
 
-    <script>
-        const response = (@json(session('response')))
-        console.log(response)
-        if(response){
-            const successMessage = response.original.message.join('<br>')
-            if(response.original.success){
-                Swal.fire('',successMessage,'success')
-            }else{
-                Swal.fire('Error',successMessage,'error')
+<script src="{{ mix('resources/js/shared.js') }}" defer></script>
 
-            }
-        }
-    </script>
+<script >        
+const response = (@json(session('response')))
+document.addEventListener("DOMContentLoaded", ()=> {    
+    handleMessage(response);
+});
+</script>
+
 @endsection

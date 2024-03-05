@@ -38,9 +38,9 @@
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="{{ route('admin_llamados') }}">Administracion de llamados</a>
                     </li>
-                    @endrole
+                @endrole
 
-                    @role('jefe_catedra')
+                @role('jefe_catedra')
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('vacantes_mi_catedra*') || Request::is('generar_orden_de_merito*') || Request::is('calificar_postulacion*') || Request::is('*/postulaciones*') ? 'active' : '' }}" href="{{ route('vacantes_mi_catedra') }}">Vacantes de mi catedra</a>
                     </li>
