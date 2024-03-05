@@ -10,7 +10,7 @@
                 </div>
             @else
             <div class='table-responsive'>
-                <table class="table table-striped  border">
+                <table class="table table-striped border">
                     <thead>
                         <tr>
                             <th>Cátera</th>

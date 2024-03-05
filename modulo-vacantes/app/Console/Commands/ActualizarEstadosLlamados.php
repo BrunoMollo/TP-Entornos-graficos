@@ -35,7 +35,6 @@ class ActualizarEstadosLlamados extends Command
 
 
         foreach ($llamados_a_atualizar as $llamado) {
-            $llamado->update(['estado' => 'cerrado']);
 
             // Envío de correo electrónico
             $destinatario = $llamado->catedra->jefe_catedra->email; 

@@ -45,6 +45,8 @@
 </div>
 
 
+<!-- <script src="{{ asset('modulo-vacantes/resources/js/shared.js') }}"></script> -->
+
 <script >
     $(document).ready(function() {
         $('#usersTable').DataTable({
@@ -89,6 +91,7 @@
         
 const response = (@json(session('response')))
 console.log(response)
+// test(response)
 if(response){
     const successMessage = response.original.message.join('<br>')
     if(response.original.success){

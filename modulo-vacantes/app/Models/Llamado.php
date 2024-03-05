@@ -17,7 +17,6 @@ class Llamado extends Model
         'descripcion',
         'fecha_apertura',
         'fecha_cierre',
-        'estado',
     ];
 
     // Relación con la catedra
