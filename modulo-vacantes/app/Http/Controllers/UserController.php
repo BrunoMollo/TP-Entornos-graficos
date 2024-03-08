@@ -200,8 +200,6 @@ class UserController extends Controller
 
     public function test(String $dest, Llamado $llamado){
         $llam= Llamado::find($llamado)->first();
-        // echo $dest;
-        // echo $llam;
-         Mail::to($dest)->send(new AvisoFinInscripcionLlamadoJefeCatedra($llam));
+        Mail::to($dest)->send(new AvisoFinInscripcionLlamadoJefeCatedra($llam));
     }
 }

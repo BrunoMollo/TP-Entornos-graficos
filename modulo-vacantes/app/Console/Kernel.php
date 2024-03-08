@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('app:actualizar-estados-llamados')->daily(); // Ejecutar todos los días a la medianoche
+        // $schedule->command('app:actualizar-estados-llamados')->daily(); // Ejecutar todos los días a la medianoche
+        $schedule->command('app:actualizar-estados-llamados')->dailyAt('23:14'); // Ejecutar todos los días a la medianoche
     }
 
     /**
@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
+        
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');

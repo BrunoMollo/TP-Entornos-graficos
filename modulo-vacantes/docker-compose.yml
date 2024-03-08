@@ -11,6 +11,8 @@ services:
             - 5173:5173
         volumes:
             - .:/var/www:cached
+        environment:
+        - TZ=America/Argentina/Buenos_Aires
 
     ####################################################################################################
     # Nginx

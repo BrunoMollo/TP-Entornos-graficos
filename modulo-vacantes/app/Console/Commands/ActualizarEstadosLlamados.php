@@ -6,6 +6,7 @@ use App\Mail\AvisoFinInscripcionLlamadoJefeCatedra;
 use App\Models\Llamado;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class ActualizarEstadosLlamados extends Command
 {
@@ -28,19 +29,26 @@ class ActualizarEstadosLlamados extends Command
      */
     public function handle()
     {
+        //  Llamados a actualizar
+        // Obtener la fecha de hoy
+        $fechaHoy = Carbon::now()->toDateString();
+
+        // Crear un objeto Carbon para la fecha específica '2024-03-08'
+        // $fechaEspecificaTest = Carbon::createFromFormat('Y-m-d', '2024-03-08')->toDateString();
+
+        // Obtener los llamados donde la fecha de cierre sea igual a la fecha de hoy
+        $llamados = Llamado::whereDate('fecha_cierre', $fechaHoy)->get();
 
 
-        //Llamados a actualizar
-        $llamados_a_atualizar = Llamado::where('fecha_cierre', '<', now())->get();
+        foreach ($llamados as $llamado) {
 
-
-        foreach ($llamados_a_atualizar as $llamado) {
-
-            // Envío de correo electrónico
+        //   Envío de correo electrónico
             $destinatario = $llamado->catedra->jefe_catedra->email; 
             Mail::to($destinatario)->send(new AvisoFinInscripcionLlamadoJefeCatedra($llamado));
         }
 
+        // $llam= Llamado::find(1)->first();
+        // Mail::to('ginogallina2002@gmail.com')->send(new AvisoFinInscripcionLlamadoJefeCatedra($llam));
 
     }
 }
