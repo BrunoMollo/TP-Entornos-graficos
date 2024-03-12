@@ -65,7 +65,11 @@ Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
     Route::post('/editar_puntajes/{postulacion}', [PostulacionController::class, 'editar_puntajes'])->name('editar_puntajes');
     Route::post('/asignar_puntajes/{postulacion}', [PostulacionController::class, 'asignar_puntajes'])->name('asignar_puntajes');
     // ORDEN DE MERITO
-    Route::get('/generar_orden_de_merito/{postulacionId}', [PostulacionController::class, 'generar_orden_de_merito'])->name('generar_orden_de_merito');
+    Route::get('/generar_orden_de_merito/{llamado}', [PostulacionController::class, 'generar_orden_de_merito'])->name('generar_orden_de_merito');
+    
+    // MAIL
+    Route::post("/primer_puesto/{dest}/{llamado}", [JefeCatedraController::class,'primer_puesto'])->name('primer_puesto');
+    Route::post("/segundo_puesto/{dest}/{llamado}", [JefeCatedraController::class,'segundo_puesto'])->name('segundo_puesto');
 });
 
 // Rutas para el CRUD de usuarios
@@ -90,19 +94,4 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
  });
 
-
-
-
-
-// Route::get('/orden_de_merito', function () {
-//     return view('orden_de_merito');
-// });
-
-// Route::get('/calificacion', function () {
-//     return view('calificacion');
-// });
-
-// Route::get('/postulacion_vacante', function () {
-//     return view('postulacion_vacante');
-// });
 

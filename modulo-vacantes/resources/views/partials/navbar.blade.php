@@ -1,4 +1,4 @@
-<div class="container mx-0 ">
+<div class="container flex-grow-1 ">
 
     <svg xmlns="http://www.w3.org/2000/svg" width="29.4000000pt" height="29.0000000pt"
         viewBox="0 0 184.000000 223.000000" preserveAspectRatio="xMidYMid meet">
@@ -19,7 +19,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
 

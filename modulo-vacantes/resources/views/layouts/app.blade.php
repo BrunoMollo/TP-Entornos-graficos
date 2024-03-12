@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name', 'Vacantes') }}</title>
 
+    <!-- <link rel='favicon' href='modulo-vacantes\public\logo-utn.png'></link> -->
+     <link rel="icon" href="{{ asset('logo-utn.png') }}" type="image/x-icon"/>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -29,6 +32,9 @@
 
     <!-- Enlace al CDN de Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- JavaScript de Bootstrap (necesario para los componentes interactivos como popovers) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
 
 
 </head>

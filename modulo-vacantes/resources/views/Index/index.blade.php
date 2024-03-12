@@ -32,7 +32,6 @@
                                 <td>{{$llamado->puesto}}</td>
                                 <td>{{$llamado->descripcion}}</td>
                                 <td>{{ \Carbon\Carbon::parse($llamado->fecha_cierre)->format('Y-m-d') }}
-                                    <a href="{{route('test',['dest'=>'ginogallina2002@gmail.com','llamado'=> $llamado])}}">Mail</a>
                                 </td>
                                 @auth
                                     @role('postulante')

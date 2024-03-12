@@ -233,10 +233,26 @@ class PostulacionController extends Controller
         }
     }
 
-    public function generar_orden_de_merito(String $idPostulacion){
+    public function generar_orden_de_merito(Llamado $llamado){
         try{
-            $postulacion = Postulacion::findOrFail($idPostulacion);
-            return view('Postulaciones.generar_orden_de_merito')->with(compact('postulacion'));
+            $meritos = Merito::all();
+
+            // Obtener las postulaciones para este llamado
+            $post = $llamado->postulaciones()->with('user', 'meritos')->get();
+
+            // Calcular el total de cada postulación
+            foreach ($post as $postulacion) {
+                $total = 0;
+                foreach ($postulacion->meritos as $merito) {
+                    $total += $merito->pivot->puntaje;
+                }
+                $postulacion->total = $total;
+            }
+
+            // Ordenar las postulaciones de mayor a menor según el total
+            $postulaciones = $post->sortByDesc('total');
+
+            return view('Postulaciones.generar_orden_de_merito')->with(compact('postulaciones','meritos','llamado'));
         }catch(\Exception $e){
             $response = response()->json(['data' => null, 'message' => ['Error al generar órden de mérito: ' . $e->getMessage(),], 'status'=> 500, 'success'=>false]);
             return redirect()->back()->with('response',$response);

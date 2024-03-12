@@ -16,6 +16,7 @@
                 <h6><b>Puesto:</b> {{ $llamado->puesto }}</h6>
                 <h6><b>Fecha cierre de postulacion:</b>  {{ \Carbon\Carbon::parse($llamado->fecha_cierre) }}</h6>
             </div>
+            <hr>
             <form action="{{ route('postulaciones.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="llamado_id" value="{{ $llamado->id }}">
