@@ -60,8 +60,21 @@
                                     <td>{{$llamado->descripcion}}</td>
                                     <td>{{ \Carbon\Carbon::parse($llamado->fecha_cierre)->format('Y-m-d') }}</td>
                                     <td class='text-end'>
-                                        <a class="btn btn-primary btn-sm {{ $abierto || !$permitirOrdenMerito ? 'disabled' : '' }}">Ver órden de mérito</a>
-                                    </TD>
+                                        <div class='text-center'>
+                                            @if($abierto || !$permitirOrdenMerito)
+                                                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Orden de mértio no disponible">
+                                            @endif
+                                                <a href="{{ route('generar_orden_de_merito',$llamado) }}" class="btn btn-primary btn-sm {{ $abierto || !$permitirOrdenMerito ? 'disabled' : '' }}">
+                                                    Ver órden de mérito
+                                                    @if($abierto || !$permitirOrdenMerito)
+                                                    <i class="fas fa-info-circle text-danger"></i>
+                                                    @endif
+                                                </a>
+                                            @if($abierto || !$permitirOrdenMerito)
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -78,6 +91,7 @@
 const response = (@json(session('response')))
 document.addEventListener("DOMContentLoaded", ()=> {    
     handleMessage(response);
+    handleTooltip()
 });
 </script>
 

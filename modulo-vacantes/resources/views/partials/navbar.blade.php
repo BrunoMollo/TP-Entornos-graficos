@@ -11,7 +11,7 @@
 
     <a class="navbar-brand mx-4" href="{{ url('/') }}">
         <!-- {{ config('app.name', 'Laravel') }} -->
-        Titulo Página
+        UTN
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

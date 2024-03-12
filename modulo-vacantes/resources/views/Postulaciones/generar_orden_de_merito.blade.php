@@ -1,5 +1,19 @@
 @extends('layouts.app')
 @section('content')
+@php 
+    $puntajesPostulaciones=[];
+    foreach($postulaciones as $postulacion){
+        array_push( $puntajesPostulaciones,count( $postulacion->meritos()->withPivot('puntaje')->get() ) );
+    };
+
+    $permitirOrdenMerito = true;
+    foreach($puntajesPostulaciones as $puntajesPostulacion){
+        if(! $puntajesPostulacion > 0){
+            $permitirOrdenMerito = false;
+        };
+    };
+
+@endphp
     <div class="container">
         <div class='shadow px-1 px-sm-5 pt-1 pb-3 bg-white'>
             <div class="row justify-content-center w-100 p-3">
@@ -9,38 +23,52 @@
                 <table class="table table-striped border">
                     <thead>
                         <tr>
+                            <th>Puesto</th>
                             <th>Postulantes</th>
-                            @foreach($meritos as $merito){
+                            @foreach($meritos as $merito)
                                 <th class="text-center">{{$merito->nombre}}</th>
-                            }
                             @endforeach
                             <th>Total</th>
-                            <th>Acción</th>
+                            @auth
+                                @role('jefe_catedra')
+                                    <th>Acción</th>
+                                @endrole
+                            @endauth
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($postulaciones as $index => $postulacion)
-                            <tr>
-                                <td class="text-center" >{{$postulacion->user->name}} {{$postulacion->user->last_name}}</td>
-                                @foreach($postulacion->meritos()->withPivot('puntaje')->get() as $meritoConPuntaje){
-                                    <td class="text-center">{{$meritoConPuntaje->pivot->puntaje;}}</td>
-                                }
-                                @endforeach
-                                <td>
-                                    {{$postulacion->total}}
-                                    {{$index}}
-                                </td>
-                                <td class='text-center'>
-                                    @if($index < 2)
-                                        <button id="btn-open-modal-{{$index}}" class='btn btn-sm btn-info' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal" data-email="{{$postulacion->user->email}}" data-posicion='1' data-llamado="{{$llamado->id}}" data-dest="{{ route('primer_puesto',['dest'=> $postulacion->user->email,'llamado'=> $llamado->id]) }}">
-                                            Enviar mail
-                                        </button>
-                                        <!-- <a class='btn btn-sm btn-info' href="{{route('primer_puesto',['dest'=>'$postulacion->user->email','llamado'=> $llamado])}}">Enviar Mail</a> -->
-                                        <!-- <a target='_blank' class='btn btn-sm btn-danger' href="mailto:{{$postulacion->user->email}}?subject=Primer/SegundoPuesto&">Enviar correo electrónico</a> -->
-                                    @endif
+                        @if(!$permitirOrdenMerito)
+                            <tr >
+                                <td class='text-danger text-center fs-4' colspan='{{count($meritos)+4}}'>
+                                    Debe cargar todos los puntajes de las postulaciones primero!
                                 </td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach($postulaciones as $index => $postulacion)
+                                <tr>
+                                    <td class="text-center">{{$index + 1}} º</td>
+                                    <td class="text-center" >{{$postulacion->user->name}} {{$postulacion->user->last_name}}</td>
+                                    @foreach($postulacion->meritos()->withPivot('puntaje')->get() as $meritoConPuntaje)
+                                        <td class="text-center">{{$meritoConPuntaje->pivot->puntaje;}}</td>
+                                    @endforeach
+                                    <td>
+                                        {{$postulacion->total}}
+                                    </td>
+                                    @auth
+                                        @role('jefe_catedra')
+                                            <td class='text-center'>
+                                                @if($index < 2)
+                                                    <button id="btn-open-modal-{{$index}}" class='btn btn-sm btn-info' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal" data-email="{{$postulacion->user->email}}" data-posicion='1' data-llamado="{{$llamado->id}}" data-dest="{{ route('primer_puesto',['dest'=> $postulacion->user->email,'llamado'=> $llamado->id]) }}">
+                                                        Enviar mail
+                                                    </button>
+                                                    <!-- <a target='_blank' class='btn btn-sm btn-danger' href="mailto:{{$postulacion->user->email}}?subject=Primer/SegundoPuesto&">Enviar correo electrónico</a> -->
+                                                @endif
+                                            </td>
+                                        @endrole
+                                    @endauth
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -80,6 +108,7 @@
 @endsection
 
 <script src="{{ mix('resources/js/shared.js') }}" defer></script>
+<script src="{{ mix('resources/js/Postulacion/index.js') }}" defer></script>
 
 
 <script>
@@ -88,26 +117,7 @@
     document.addEventListener("DOMContentLoaded", ()=> {
         
         handleMessage(response);
-        
-        const button_0 = document.getElementById('btn-open-modal-0');
-        const button_1 = document.getElementById('btn-open-modal-1');
+        emailHandler();
 
-        button_0.addEventListener('click', function() {
-            const email = this.dataset.email;
-            const destino = this.dataset.dest;
-            const llamado = this.dataset.llamado;
-            
-            document.getElementById('miModalLabel').textContent = 'Enviar mail a ' + email;
-            document.querySelector('#miModal form').action = destino;
-        });
-
-        button_1.addEventListener('click', function() {
-            const email = this.dataset.email;
-            const destino = this.dataset.dest;
-            const llamado = this.dataset.llamado;
-            
-            document.getElementById('miModalLabel').textContent = 'Enviar mail a ' + email;
-            document.querySelector('#miModal form').action = destino;
-        });
     });
 </script>

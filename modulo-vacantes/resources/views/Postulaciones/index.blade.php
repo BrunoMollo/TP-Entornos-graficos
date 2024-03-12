@@ -86,30 +86,42 @@
                 @role('jefe_catedra')
                     <div class="col-12">
                         <div class='text-end mt-4'>
-                            @if($abierto || !$permitirOrdenMerito)
-                                <i data-bs-toggle="popover" title="Advertencia" data-bs-content="{{$mensaje}}" class="text-danger me-1 fas fa-exclamation-triangle"></i>
-                            @endif
-                            <a href="{{ route('generar_orden_de_merito',$llamado) }}" class='btn btn-success {{ ( $abierto || !$permitirOrdenMerito ) ? 'disabled' : ''  }}'>Generar órden de mérito</a>
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="{{$mensaje}}">
+                                <a href="{{ route('generar_orden_de_merito',$llamado) }}" class='btn btn-success {{ ( $abierto || !$permitirOrdenMerito ) ? 'disabled' : ''  }}'>
+                                    @if($abierto || !$permitirOrdenMerito)
+                                        <i class="fas fa-info-circle text-danger"></i>
+                                    @endif
+                                    Generar órden de mérito
+                                </a>
+                            </span>
                         </div>
                     </div>
                 @endrole
             </div>
         </div>
-
     </div>
+
+
+    <!-- POPPER -->
+    <!-- <div class="popover" role="tooltip">
+        <div class="popover-header">
+            <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        <div class="popover-body">
+        </div>
+    </div> -->
     
 <script src="{{ mix('resources/js/shared.js') }}" defer></script>
+<script src="{{ mix('resources/js/Postulacion/index.js') }}" defer></script>
+
 
 <script >
 const response = (@json(session('response')))
 document.addEventListener("DOMContentLoaded", ()=> {
 
     handleMessage(response);
+    handleTooltip()
 
-    let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl);
-    });
 });
 </script>
 @endsection

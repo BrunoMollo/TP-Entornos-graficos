@@ -7,6 +7,7 @@ use App\Models\Llamado;
 use Illuminate\Support\Facades\Auth;
 use Mail;
 use App\Mail\PrimerPuesto;
+use Carbon\Carbon;
 
 
 class JefeCatedraController extends Controller
@@ -15,7 +16,26 @@ class JefeCatedraController extends Controller
     {
         $catedrasUsuario = Auth::user()->catedras;
         $catedraIds = $catedrasUsuario->pluck('id');
-        $llamados = Llamado::whereIn('catedra_id', $catedraIds)->get();
+
+        $hoy = Carbon::now()->toDateString();
+
+        // Obtener las entradas donde fecha_cierre > hoy y ordenarlas por fecha_cierre
+        $llamadosFechaHoy = Llamado::whereIn('catedra_id', $catedraIds)->where('fecha_cierre', '>', $hoy)
+                                    ->orderBy('fecha_cierre')
+                                    ->get();
+
+        // Obtener todas las demás entradas y ordenarlas por fecha_cierre
+        $llamadosOtrasFechas = Llamado::whereIn('catedra_id', $catedraIds)->where('fecha_cierre', '<=', $hoy)
+                                    ->orderByDesc('fecha_cierre')
+                                    ->get();
+
+        // Unir ambos resultados
+        $llamados = $llamadosFechaHoy->concat($llamadosOtrasFechas);
+
+        
+        // $llam = Llamado::whereIn('catedra_id', $catedraIds)->get();
+        // $llamados = $llam->sortBy('fecha_cierre');
+
         return view('Vacantes.vacantes_mi_catedra', ['llamados' => $llamados]);
     }
 

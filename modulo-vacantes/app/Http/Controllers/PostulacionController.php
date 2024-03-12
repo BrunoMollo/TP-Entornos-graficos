@@ -249,8 +249,23 @@ class PostulacionController extends Controller
                 $postulacion->total = $total;
             }
 
-            // Ordenar las postulaciones de mayor a menor según el total
-            $postulaciones = $post->sortByDesc('total');
+            // Construir un arreglo auxiliar con los totales y los índices originales
+            $totales = [];
+            foreach ($post as $index => $postulacion) {
+                $totales[$index] = $postulacion->total;
+            }
+
+            // Ordenar el arreglo de totales de mayor a menor, manteniendo los índices originales
+            arsort($totales);
+
+            // Obtener los índices ordenados
+            $indicesOrdenados = array_keys($totales);
+
+            // Ordenar las postulaciones de acuerdo a los índices ordenados
+            $postulaciones = [];
+            foreach ($indicesOrdenados as $indice) {
+                $postulaciones[] = $post[$indice];
+            }
 
             return view('Postulaciones.generar_orden_de_merito')->with(compact('postulaciones','meritos','llamado'));
         }catch(\Exception $e){

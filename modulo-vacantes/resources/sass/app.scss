@@ -8,6 +8,9 @@
 @import 'bootstrap/scss/bootstrap';
 
 
+// Sobrescribe la variable de color de fondo del tooltip
+$tooltip-bg: red; // Cambia este color según lo que necesites
+
 #app {
     // background: linear-gradient(to bottom, #c8e2e6, #87ceeb);
     // background: linear-gradient(to bottom, #ffffff, #b0e0e6);
@@ -17,4 +20,6 @@
 .text-login-register{
     background-color: rgb(172, 221, 221);
 }
+
+
 

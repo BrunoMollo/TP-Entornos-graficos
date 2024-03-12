@@ -23,7 +23,9 @@ class AdminLlamadosController extends Controller
     {
         
         $hoy = Carbon::now();
-        $llamados = Llamado::where('fecha_cierre' ,'<', $hoy)->get();
+        $llam = Llamado::where('fecha_cierre' ,'<', $hoy)->get();
+        $llamados = $llam->sortByDesc('fecha_cierre');
+
         return view('Vacantes.vacantes_cerradas', ['llamados' => $llamados]);
     }
 

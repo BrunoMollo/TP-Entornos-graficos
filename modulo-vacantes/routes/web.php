@@ -34,6 +34,8 @@ Route::redirect('/home', '/');
 Route::redirect('/index', '/');
 // Vista Vacantes Cerradas
 Route::get('/vacantes_cerradas', [AdminLlamadosController::class, 'vacantes_cerradas'])->name('vacantes_cerradas');
+// ORDEN DE MERITO
+Route::get('/generar_orden_de_merito/{llamado}', [PostulacionController::class, 'generar_orden_de_merito'])->name('generar_orden_de_merito');
 
 
 
@@ -64,8 +66,7 @@ Route::middleware(['auth', 'role:jefe_catedra'])->group(function () {
     Route::get('/calificar_postulacion/{postulacion}', [PostulacionController::class, 'calificar_postulacion'])->name('calificar_postulacion');
     Route::post('/editar_puntajes/{postulacion}', [PostulacionController::class, 'editar_puntajes'])->name('editar_puntajes');
     Route::post('/asignar_puntajes/{postulacion}', [PostulacionController::class, 'asignar_puntajes'])->name('asignar_puntajes');
-    // ORDEN DE MERITO
-    Route::get('/generar_orden_de_merito/{llamado}', [PostulacionController::class, 'generar_orden_de_merito'])->name('generar_orden_de_merito');
+    
     
     // MAIL
     Route::post("/primer_puesto/{dest}/{llamado}", [JefeCatedraController::class,'primer_puesto'])->name('primer_puesto');

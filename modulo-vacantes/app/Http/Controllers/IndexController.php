@@ -26,7 +26,12 @@ class IndexController extends Controller
     public function index()
     {
         $hoy = Carbon::now();
-        $llamados = Llamado::where('fecha_cierre' ,'>', $hoy)->get();
+        $llam = Llamado::where('fecha_cierre' ,'>', $hoy)->get();
+        // });
+
+        // Ordenar la colección según la fecha de cierre
+        $llamados = $llam->sortBy('fecha_cierre');
+
         return view('Index.index')->with(compact('llamados'));
     }
 }
